@@ -15,16 +15,29 @@
     var navMenu = document.getElementById('navMenu');
 
     if (navToggle && navMenu) {
+      function setMenu(open) {
+        navMenu.classList.toggle('open', open);
+        navToggle.classList.toggle('open', open);
+        document.documentElement.classList.toggle('no-scroll', open);
+        document.body.classList.toggle('no-scroll', open);
+      }
+
       navToggle.addEventListener('click', function () {
-        navMenu.classList.toggle('open');
-        navToggle.classList.toggle('open');
+        setMenu(!navMenu.classList.contains('open'));
       });
 
       navMenu.querySelectorAll('.nav-link').forEach(function (link) {
         link.addEventListener('click', function () {
-          navMenu.classList.remove('open');
-          navToggle.classList.remove('open');
+          setMenu(false);
         });
+      });
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') setMenu(false);
+      });
+
+      window.addEventListener('resize', function () {
+        if (window.innerWidth > 1024) setMenu(false);
       });
     }
 
@@ -235,12 +248,16 @@
         var fields = [
           { el: firstName, check: function () { return firstName.value.trim().length > 0; } },
           { el: lastName, check: function () { return lastName.value.trim().length > 0; } },
-          { el: email, check: function () {
+          {
+            el: email, check: function () {
               return /^[^\s@]+@gmail\.com$/i.test(email.value.trim());
-            } },
-          { el: phone, check: function () {
+            }
+          },
+          {
+            el: phone, check: function () {
               return phone.value.trim() === '' || /^[+\d][\d\s().-]{6,}$/.test(phone.value.trim());
-            } },
+            }
+          },
           { el: subject, check: function () { return subject.value !== ''; } },
           { el: message, check: function () { return message.value.trim().length >= 20; } }
         ];

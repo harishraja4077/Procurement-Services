@@ -91,19 +91,30 @@
       } catch (err) { /* ignore */ }
     }
 
-    if (menuBtn && sidebar) {
+    function setSidebar(open) {
+      if (sidebar) sidebar.classList.toggle('open', open);
+      if (backdrop) backdrop.classList.toggle('show', open);
+      document.documentElement.classList.toggle('no-scroll', open);
+      document.body.classList.toggle('no-scroll', open);
+    }
+
+    if (menuBtn) {
       menuBtn.addEventListener('click', function () {
-        sidebar.classList.toggle('open');
-        if (backdrop) backdrop.classList.add('show');
+        setSidebar(!sidebar.classList.contains('open'));
       });
     }
 
     if (backdrop) {
       backdrop.addEventListener('click', function () {
-        if (sidebar) sidebar.classList.remove('open');
-        backdrop.classList.remove('show');
+        setSidebar(false);
       });
     }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && sidebar && sidebar.classList.contains('open')) {
+        setSidebar(false);
+      }
+    });
   }
 
   /* ---------- Page / tab switching ---------- */
@@ -379,17 +390,17 @@
       modal.className = 'modal-backdrop';
       modal.innerHTML =
         '<div class="modal" role="dialog" aria-modal="true" style="max-width:400px;">' +
-          '<div class="modal-body" style="text-align:center;">' +
-            '<div class="e-ic" style="margin:0 auto 14px;width:58px;height:58px;border-radius:16px;background:rgba(239,68,68,.12);display:flex;align-items:center;justify-content:center;">' +
-              '<svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:#ef4444;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;"><path d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>' +
-            '</div>' +
-            '<h3 style="color:var(--navy);font-size:1.05rem;font-weight:800;margin-bottom:6px;">Are you sure?</h3>' +
-            '<p id="confirmMsg" style="color:var(--text-light);font-size:.88rem;margin-bottom:20px;"></p>' +
-            '<div style="display:flex;gap:10px;justify-content:center;">' +
-              '<button type="button" class="btn btn-outline" data-confirm-cancel>Cancel</button>' +
-              '<button type="button" class="btn btn-danger" data-confirm-ok>Yes, Delete</button>' +
-            '</div>' +
-          '</div>' +
+        '<div class="modal-body" style="text-align:center;">' +
+        '<div class="e-ic" style="margin:0 auto 14px;width:58px;height:58px;border-radius:16px;background:rgba(239,68,68,.12);display:flex;align-items:center;justify-content:center;">' +
+        '<svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:#ef4444;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;"><path d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>' +
+        '</div>' +
+        '<h3 style="color:var(--navy);font-size:1.05rem;font-weight:800;margin-bottom:6px;">Are you sure?</h3>' +
+        '<p id="confirmMsg" style="color:var(--text-light);font-size:.88rem;margin-bottom:20px;"></p>' +
+        '<div style="display:flex;gap:10px;justify-content:center;">' +
+        '<button type="button" class="btn btn-outline" data-confirm-cancel>Cancel</button>' +
+        '<button type="button" class="btn btn-danger" data-confirm-ok>Yes, Delete</button>' +
+        '</div>' +
+        '</div>' +
         '</div>';
       document.body.appendChild(modal);
 
@@ -666,17 +677,17 @@
 
     return (
       '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Trend chart">' +
-        '<defs>' +
-          '<linearGradient id="' + gradId + '" x1="0" y1="0" x2="0" y2="1">' +
-            '<stop offset="0%" stop-color="' + color + '" stop-opacity="0.28"/>' +
-            '<stop offset="100%" stop-color="' + color + '" stop-opacity="0.02"/>' +
-          '</linearGradient>' +
-        '</defs>' +
-        grid +
-        '<path d="' + area + '" fill="url(#' + gradId + ')" class="chart-fill"/>' +
-        '<path d="' + path + '" fill="none" stroke="' + color + '" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="chart-line-anim" style="stroke-dasharray:' + len + ';stroke-dashoffset:' + len + ';"/>' +
-        xlabels +
-        dots +
+      '<defs>' +
+      '<linearGradient id="' + gradId + '" x1="0" y1="0" x2="0" y2="1">' +
+      '<stop offset="0%" stop-color="' + color + '" stop-opacity="0.28"/>' +
+      '<stop offset="100%" stop-color="' + color + '" stop-opacity="0.02"/>' +
+      '</linearGradient>' +
+      '</defs>' +
+      grid +
+      '<path d="' + area + '" fill="url(#' + gradId + ')" class="chart-fill"/>' +
+      '<path d="' + path + '" fill="none" stroke="' + color + '" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="chart-line-anim" style="stroke-dasharray:' + len + ';stroke-dashoffset:' + len + ';"/>' +
+      xlabels +
+      dots +
       '</svg>'
     );
   }
@@ -735,8 +746,8 @@
       var y = base - h;
       bars +=
         '<g class="chart-bar-anim" style="transform-origin:' + (x + bw / 2) + 'px ' + base + 'px;">' +
-          '<rect x="' + x.toFixed(2) + '" y="' + y.toFixed(2) + '" width="' + bw.toFixed(2) + '" height="' + h.toFixed(2) + '" rx="6" fill="' + color + '" opacity="0.92"><title>' + l + ': ' + fmtNum(values[i]) + '</title></rect>' +
-          '<text x="' + (x + bw / 2).toFixed(2) + '" y="' + (base - 12) + '" text-anchor="middle" font-size="11" font-weight="700" fill="#0a1f3c">' + fmtNum(values[i]) + '</text>' +
+        '<rect x="' + x.toFixed(2) + '" y="' + y.toFixed(2) + '" width="' + bw.toFixed(2) + '" height="' + h.toFixed(2) + '" rx="6" fill="' + color + '" opacity="0.92"><title>' + l + ': ' + fmtNum(values[i]) + '</title></rect>' +
+        '<text x="' + (x + bw / 2).toFixed(2) + '" y="' + (base - 12) + '" text-anchor="middle" font-size="11" font-weight="700" fill="#0a1f3c">' + fmtNum(values[i]) + '</text>' +
         '</g>' +
         '<text x="' + (x + bw / 2).toFixed(2) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="#9aa7b8">' + l + '</text>';
     });
@@ -797,10 +808,10 @@
 
     return (
       '<svg viewBox="0 0 ' + size + ' ' + size + '" role="img" aria-label="Donut chart">' +
-        '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="#eef2f7" stroke-width="' + sw + '"/>' +
-        segs +
-        '<text x="' + cx + '" y="' + (cy - 2) + '" text-anchor="middle" font-size="26" font-weight="800" fill="#0a1f3c">' + centerValue + '</text>' +
-        '<text x="' + cx + '" y="' + (cy + 20) + '" text-anchor="middle" font-size="11" fill="#64748b" font-weight="600">' + centerTitle + '</text>' +
+      '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="none" stroke="#eef2f7" stroke-width="' + sw + '"/>' +
+      segs +
+      '<text x="' + cx + '" y="' + (cy - 2) + '" text-anchor="middle" font-size="26" font-weight="800" fill="#0a1f3c">' + centerValue + '</text>' +
+      '<text x="' + cx + '" y="' + (cy + 20) + '" text-anchor="middle" font-size="11" fill="#64748b" font-weight="600">' + centerTitle + '</text>' +
       '</svg>'
     );
   }
