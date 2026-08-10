@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Dashboard | Stackly</title>
+  <meta name="description" content="Stackly user dashboard — manage procurement requests, track orders, savings and suppliers in one place.">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dash-body" data-role="user">
+
+  <!-- ===== Sidebar ===== -->
+  <aside class="dash-sidebar" id="sidebar">
+    <a href="index.html" class="sidebar-brand">
+      <img src="assets/logo.webp" alt="Stackly">
+      <span class="brand-txt"><span>Client Portal</span></span>
+    </a>
+
+    <nav class="sidebar-scroll" aria-label="Dashboard navigation">
+      <p class="side-nav-label">Menu</p>
+
+      <button type="button" class="side-nav-item active" data-page="overview">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+        Overview
+      </button>
+
+      <button type="button" class="side-nav-item" data-page="requests">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6M9 17h6"/></svg>
+        My Requests
+        <span class="nav-badge">4</span>
+      </button>
+
+      <button type="button" class="side-nav-item" data-page="orders">
+        <svg viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg>
+        My Orders
+      </button>
+
+      <button type="button" class="side-nav-item" data-page="vendors">
+        <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4h6v4"/><path d="M9 10h.01M15 10h.01"/></svg>
+        Vendors
+      </button>
+
+      <button type="button" class="side-nav-item" data-page="reports">
+        <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v-4M12 15V8M17 15v-7"/></svg>
+        Reports
+      </button>
+
+      <button type="button" class="side-nav-item" data-page="settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="sidebar-user">
+        <span class="avatar"><img src="assets/team-1.webp" alt="Sarah Lambert"></span>
+        <div>
+          <div class="u-name">Sarah Lambert</div>
+          <div class="u-role">Procurement Manager</div>
+        </div>
+      </div>
+      <a href="index.html" class="back-site">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+        Back to Website
+      </a>
+    </div>
+  </aside>
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- ===== Main ===== -->
+  <div class="dash-main">
+
+    <!-- ===== Topbar ===== -->
+    <header class="dash-topbar">
+      <button type="button" class="topbar-menu-btn" id="menuToggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+
+      <div class="topbar-title">
+        <h1>Welcome back, Sarah</h1>
+        <p id="todayDate">Here&rsquo;s your procurement overview.</p>
+      </div>
+
+      <div class="topbar-search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Search requests, orders, vendors&hellip;">
+      </div>
+
+      <div class="topbar-actions">
+
+        <div class="dropdown">
+          <button type="button" class="icon-btn" data-dropdown="notifDropdown" aria-label="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="dot-indicator"></span>
+          </button>
+
+          <div class="dropdown-panel" id="notifDropdown">
+            <div class="dropdown-head">
+              <b>Notifications</b>
+              <button type="button" id="markAllRead">Mark all read</button>
+            </div>
+            <div class="dropdown-list" id="notifList">
+              <div class="dropdown-item">
+                <span class="d-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <div class="d-text"><p>Order PO-10422 delivered</p><span>NovaFreight Logistics completed delivery.</span></div>
+                <span class="d-time">2h ago</span>
+              </div>
+              <div class="dropdown-item">
+                <span class="d-icon gold"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                <div class="d-text"><p>Savings milestone reached</p><span>You saved $418K this quarter.</span></div>
+                <span class="d-time">5h ago</span>
+              </div>
+              <div class="dropdown-item">
+                <span class="d-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg></span>
+                <div class="d-text"><p>Request PR-2026-0115</p><span>Warehouse racking is awaiting approval.</span></div>
+                <span class="d-time">1d ago</span>
+              </div>
+              <div class="dropdown-item">
+                <span class="d-icon red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg></span>
+                <div class="d-text"><p>Contract renewal due</p><span>VitalMed Supply contract expires in 14 days.</span></div>
+                <span class="d-time">2d ago</span>
+              </div>
+            </div>
+            <div class="dropdown-foot"><a href="#" data-page="requests">View all requests</a></div>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <button type="button" class="profile-btn" data-dropdown="profileDropdown" aria-label="Account menu">
+            <span class="avatar sm"><img src="assets/team-1.webp" alt="Sarah Lambert"></span>
+            <span>
+              <span class="p-name">Sarah Lambert</span>
+              <span class="p-role" style="display:block;">Procurement Manager</span>
+            </span>
+          </button>
+
+          <div class="dropdown-panel profile-menu" id="profileDropdown">
+            <button type="button" class="profile-menu-item" data-page="settings">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+              My Profile
+            </button>
+            <button type="button" class="profile-menu-item" data-open-modal="newRequestModal">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+              New Request
+            </button>
+            <button type="button" class="profile-menu-item">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+              Help &amp; Support
+            </button>
+            <button type="button" class="profile-menu-item danger" data-logout>
+              <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+              Sign Out
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ===== Content ===== -->
+    <main class="dash-content">
+
+      <!-- ========== OVERVIEW ========== -->
+      <section class="dash-page active" id="overview">
+        <div class="page-head">
+          <div>
+            <h2>Procurement Overview</h2>
+            <p>Your spend, savings and activity at a glance.</p>
+          </div>
+          <div class="page-head-actions">
+            <button type="button" class="btn btn-outline">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+              Export Report
+            </button>
+            <button type="button" class="btn btn-gold" data-open-modal="newRequestModal">
+              <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              New Request
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="k-top">
+              <span class="kpi-ic gold"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
+              <span class="kpi-trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg> 12.5%</span>
+            </div>
+            <div class="k-label">Total Spend</div>
+            <div class="k-value counter" data-target="2.4" data-decimals="1" data-prefix="$" data-suffix="M">0</div>
+            <div class="k-sub">vs. previous quarter</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="k-top">
+              <span class="kpi-ic teal"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span class="kpi-trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg> 18.2%</span>
+            </div>
+            <div class="k-label">Savings YTD</div>
+            <div class="k-value counter" data-target="418" data-prefix="$" data-suffix="K">0</div>
+            <div class="k-sub">target: $500K</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="k-top">
+              <span class="kpi-ic navy"><svg viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg></span>
+              <span class="kpi-trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg> 4</span>
+            </div>
+            <div class="k-label">Active Orders</div>
+            <div class="k-value counter" data-target="26">0</div>
+            <div class="k-sub">5 in transit</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="k-top">
+              <span class="kpi-ic blue"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+              <span class="kpi-trend down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg> 3 pending</span>
+            </div>
+            <div class="k-label">Pending Approvals</div>
+            <div class="k-value counter" data-target="8">0</div>
+            <div class="k-sub">2 need action today</div>
+          </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="quick-actions">
+          <button type="button" class="qa-btn" data-open-modal="newRequestModal">
+            <span class="qa-ic"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+            <b>New Requisition</b>
+            <span>Submit a purchase request</span>
+          </button>
+          <button type="button" class="qa-btn" data-page="orders">
+            <span class="qa-ic"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+            <b>Track Orders</b>
+            <span>Follow live deliveries</span>
+          </button>
+          <button type="button" class="qa-btn" data-page="vendors">
+            <span class="qa-ic"><svg viewBox="0 0 24 24"><path d="M20 7 18 3H6L4 7m16 0a3 3 0 0 1-6 0m6 0v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7m2 0a3 3 0 0 0 6 0m-6 0h6"/></svg></span>
+            <b>Find a Vendor</b>
+            <span>Browse the supplier network</span>
+          </button>
+          <button type="button" class="qa-btn" data-page="reports">
+            <span class="qa-ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v-4M12 15V8M17 15v-7"/></svg></span>
+            <b>View Reports</b>
+            <span>Spend &amp; savings analysis</span>
+          </button>
+        </div>
+
+        <!-- Charts row -->
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Spend Trend</h3>
+                <div class="sub">Monthly procurement spend (USD)</div>
+              </div>
+              <div>
+                <button type="button" class="chip" data-chart="line" data-range="3m">3M</button>
+                <button type="button" class="chip active" data-chart="line" data-range="6m">6M</button>
+                <button type="button" class="chip" data-chart="line" data-range="12m">12M</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-box">
+                <div class="chart-line" data-js data-color="#f0a500"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Spend by Category</h3>
+                <div class="sub">Current quarter allocation</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-box" style="text-align:center;">
+                <div class="chart-donut" data-js data-dataset="categories" data-center-title="Total Spend" data-center-value="$2.4M" style="max-width:250px;margin:0 auto;"></div>
+                <div class="chart-legend" data-js-legend></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent requests + activity -->
+        <div class="grid-2 mt-18">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Recent Requests</h3>
+                <div class="sub">Your latest purchase requests</div>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm" data-page="requests">View All</button>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>Request</th><th>Category</th><th>Status</th><th>Date</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td class="cell-strong">Office Laptops (Dell Latitude)</td><td class="cell-muted">IT Hardware</td><td><span class="badge green">Approved</span></td><td class="cell-muted">Feb 02, 2026</td></tr>
+                  <tr><td class="cell-strong">Warehouse Racking Systems</td><td class="cell-muted">Facilities</td><td><span class="badge amber">Pending</span></td><td class="cell-muted">Feb 01, 2026</td></tr>
+                  <tr><td class="cell-strong">Marketing Agency Retainer</td><td class="cell-muted">Marketing</td><td><span class="badge blue">In Review</span></td><td class="cell-muted">Jan 28, 2026</td></tr>
+                  <tr><td class="cell-strong">Freight Forwarding Contract</td><td class="cell-muted">Logistics</td><td><span class="badge green">Approved</span></td><td class="cell-muted">Jan 25, 2026</td></tr>
+                  <tr><td class="cell-strong">Legal Advisory Services</td><td class="cell-muted">Prof. Services</td><td><span class="badge red">Rejected</span></td><td class="cell-muted">Jan 22, 2026</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Recent Activity</h3>
+                <div class="sub">Latest events on your account</div>
+              </div>
+            </div>
+            <div class="activity-list">
+              <div class="activity-item">
+                <span class="a-ic" style="background:linear-gradient(135deg,#2dd4bf,#14b8a6);"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <div><p><b>Order delivered</b> &mdash; PO-10422 from NovaFreight Logistics.</p><span class="a-time">Today, 10:24 AM</span></div>
+              </div>
+              <div class="activity-item">
+                <span class="a-ic" style="background:linear-gradient(135deg,#f0a500,#d18f00);"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/></svg></span>
+                <div><p><b>Milestone reached</b> &mdash; Quarterly savings now $418K.</p><span class="a-time">Yesterday, 4:02 PM</span></div>
+              </div>
+              <div class="activity-item">
+                <span class="a-ic" style="background:linear-gradient(135deg,#3b82f6,#2563eb);"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></span>
+                <div><p><b>Reminder</b> &mdash; PR-2026-0115 awaiting your approval.</p><span class="a-time">Yesterday, 9:40 AM</span></div>
+              </div>
+              <div class="activity-item">
+                <span class="a-ic" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span>
+                <div><p><b>Contract signed</b> &mdash; New 12-month agreement with CloudPeak.</p><span class="a-time">Jan 29, 2026</span></div>
+              </div>
+              <div class="activity-item">
+                <span class="a-ic" style="background:linear-gradient(135deg,#ef4444,#dc2626);"><svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></span>
+                <div><p><b>Action needed</b> &mdash; VitalMed contract renewal in 14 days.</p><span class="a-time">Jan 28, 2026</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== REQUESTS ========== -->
+      <section class="dash-page" id="requests">
+        <div class="page-head">
+          <div>
+            <h2>My Requests</h2>
+            <p>Create and manage purchase requests.</p>
+          </div>
+          <div class="page-head-actions">
+            <button type="button" class="btn btn-gold" data-open-modal="newRequestModal">
+              <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              New Request
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-toolbar">
+            <div class="search-box">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+              <input type="text" class="js-table-search" placeholder="Search requests&hellip;">
+            </div>
+            <select class="filter-select js-table-filter">
+              <option value="">All statuses</option>
+              <option value="approved">Approved</option>
+              <option value="pending">Pending</option>
+              <option value="review">In Review</option>
+              <option value="rejected">Rejected</option>
+              <option value="completed">Completed</option>
+            </select>
+            <span class="js-page-info" style="margin-left:auto;font-size:.8rem;color:var(--text-light);"></span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table" data-table="requests" data-page-size="6">
+              <thead>
+                <tr><th>Request</th><th>Category</th><th>Priority</th><th>Status</th><th>Date</th><th style="text-align:right;">Action</th></tr>
+              </thead>
+              <tbody>
+                <tr data-filter="approved" data-search="office laptops dell latitude it hardware high feb">
+                  <td><b class="cell-strong">Office Laptops (Dell Latitude)</b><div class="cell-muted">PR-2026-0114 &middot; Qty 24</div></td>
+                  <td class="cell-muted">IT Hardware</td>
+                  <td><span class="badge red">High</span></td>
+                  <td><span class="badge green">Approved</span></td>
+                  <td class="cell-muted">Feb 02, 2026</td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm" data-action="approve" data-toast="Request is already approved.">View</button></td>
+                </tr>
+                <tr data-filter="pending" data-search="warehouse racking systems facilities high feb">
+                  <td><b class="cell-strong">Warehouse Racking Systems</b><div class="cell-muted">PR-2026-0115 &middot; Qty 40</div></td>
+                  <td class="cell-muted">Facilities</td>
+                  <td><span class="badge red">High</span></td>
+                  <td><span class="badge amber">Pending</span></td>
+                  <td class="cell-muted">Feb 01, 2026</td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-navy btn-sm" data-action="approve">Approve</button></td>
+                </tr>
+                <tr data-filter="review" data-search="marketing agency retainer marketing medium jan">
+                  <td><b class="cell-strong">Marketing Agency Retainer</b><div class="cell-muted">PR-2026-0113 &middot; Qty 1</div></td>
+                  <td class="cell-muted">Marketing</td>
+                  <td><span class="badge amber">Medium</span></td>
+                  <td><span class="badge blue">In Review</span></td>
+                  <td class="cell-muted">Jan 28, 2026</td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Request is currently under review.">View</button></td>
+                </tr>
+                <tr data-filter="approved" data-search="freight forwarding contract logistics high jan">
+                  <td><b class="cell-strong">Freight Forwarding Contract</b><div class="cell-muted">PR-2026-0112 &middot; Qty 1</div></td>
+                  <td class="cell-muted">Logistics</td>
+                  <td><span class="badge red">High</span></td>
+                  <td><span class="badge green">Approved</span></td>
+                  <td class="cell-muted">Jan 25, 2026</td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Approved. PO was created.">View</button></td>
+                </tr>
+                <tr data-filter="rejected" data-search="legal advisory services professional services low jan">
+                  <td><b class="cell-strong">Legal Advisory Services</b><div class="cell-muted">PR-2026-0111 &middot; Qty 1</div></td>
+                  <td class="cell-muted">Prof. Services</td>
+                  <td><span class="badge blue">Low</span></td>
+                  <td><span class="badge red">Rejected</span></td>
+                  <td class="cell-muted">Jan 22, 2026</td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm" data-action="reject" data-toast="Request was rejected.">View</button></td>
+                </tr>
+                <tr data-filter="approved" data-search="cloud storage aws s3 it hardware medium jan">
+                  <td><b class="cell-strong">Cloud Storage (AWS S3)</b><div class="cell-muted">PR-2026-0110 &middot; Qty 1</div></td>
+                  <td class="cell-muted">IT Hardware</td>
+                  <td><span class="badge amber">Medium</span></td>
+                  <td><span class="badge green">Approved</span></td>
+                  <td class="cell-muted">Jan 20, 2026</td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Approved. Order placed with CloudPeak.">View</button></td>
+                </tr>
+                <tr data-filter="completed" data-search="office furniture refresh facilities low jan">
+                  <td><b class="cell-strong">Office Furniture Refresh</b><div class="cell-muted">PR-2026-0109 &middot; Qty 18</div></td>
+                  <td class="cell-muted">Facilities</td>
+                  <td><span class="badge blue">Low</span></td>
+                  <td><span class="badge teal">Completed</span></td>
+                  <td class="cell-muted">Jan 18, 2026</td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Request completed successfully.">View</button></td>
+                </tr>
+                <tr data-filter="pending" data-search="corporate catering partner hospitality medium jan">
+                  <td><b class="cell-strong">Corporate Catering Partner</b><div class="cell-muted">PR-2026-0108 &middot; Qty 1</div></td>
+                  <td class="cell-muted">Hospitality</td>
+                  <td><span class="badge amber">Medium</span></td>
+                  <td><span class="badge amber">Pending</span></td>
+                  <td class="cell-muted">Jan 15, 2026</td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-navy btn-sm" data-action="approve">Approve</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="empty-state js-table-empty" style="display:none;">
+            <div class="e-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg></div>
+            <b>No matching requests</b>
+            <p>Try adjusting your search or filter to find what you&rsquo;re looking for.</p>
+          </div>
+          <div class="pagination js-pagination"></div>
+        </div>
+      </section>
+
+      <!-- ========== ORDERS ========== -->
+      <section class="dash-page" id="orders">
+        <div class="page-head">
+          <div>
+            <h2>My Orders</h2>
+            <p>Track your purchase orders and deliveries.</p>
+          </div>
+          <div class="page-head-actions">
+            <button type="button" class="btn btn-outline">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+              Export Orders
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-toolbar">
+            <div class="search-box">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+              <input type="text" class="js-table-search" placeholder="Search orders&hellip;">
+            </div>
+            <select class="filter-select js-table-filter">
+              <option value="">All statuses</option>
+              <option value="processing">Processing</option>
+              <option value="transit">In Transit</option>
+              <option value="delivered">Delivered</option>
+              <option value="hold">On Hold</option>
+            </select>
+            <span class="js-page-info" style="margin-left:auto;font-size:.8rem;color:var(--text-light);"></span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table" data-table="orders" data-page-size="6">
+              <thead>
+                <tr><th>Order</th><th>Vendor</th><th>Items</th><th>Total</th><th>Status</th><th style="width:160px;">Progress</th></tr>
+              </thead>
+              <tbody>
+                <tr data-filter="transit" data-search="po-10423 meridian steel steel beams in transit">
+                  <td><b class="cell-strong">PO-10423</b><div class="cell-muted">Jan 30, 2026</div></td>
+                  <td class="cell-muted">Meridian Steel</td>
+                  <td class="cell-muted">Steel Beams (120)</td>
+                  <td class="cell-strong">$184,200</td>
+                  <td><span class="badge blue">In Transit</span></td>
+                  <td><div class="progress blue"><div class="bar" style="width:70%;"></div></div></td>
+                </tr>
+                <tr data-filter="delivered" data-search="po-10422 novafreight logistics freight delivered">
+                  <td><b class="cell-strong">PO-10422</b><div class="cell-muted">Jan 28, 2026</div></td>
+                  <td class="cell-muted">NovaFreight Logistics</td>
+                  <td class="cell-muted">Freight &mdash; West Coast</td>
+                  <td class="cell-strong">$42,800</td>
+                  <td><span class="badge green">Delivered</span></td>
+                  <td><div class="progress"><div class="bar" style="width:100%;"></div></div></td>
+                </tr>
+                <tr data-filter="processing" data-search="po-10421 cloudpeak solutions saas licenses processing">
+                  <td><b class="cell-strong">PO-10421</b><div class="cell-muted">Jan 26, 2026</div></td>
+                  <td class="cell-muted">CloudPeak Solutions</td>
+                  <td class="cell-muted">SaaS Licenses (60)</td>
+                  <td class="cell-strong">$96,000</td>
+                  <td><span class="badge amber">Processing</span></td>
+                  <td><div class="progress"><div class="bar" style="width:35%;"></div></div></td>
+                </tr>
+                <tr data-filter="transit" data-search="po-10420 atlas components circuit boards transit">
+                  <td><b class="cell-strong">PO-10420</b><div class="cell-muted">Jan 24, 2026</div></td>
+                  <td class="cell-muted">Atlas Components</td>
+                  <td class="cell-muted">Circuit Boards (5K)</td>
+                  <td class="cell-strong">$210,500</td>
+                  <td><span class="badge blue">In Transit</span></td>
+                  <td><div class="progress blue"><div class="bar" style="width:72%;"></div></div></td>
+                </tr>
+                <tr data-filter="delivered" data-search="po-10419 brightpack packaging corrugated boxes delivered">
+                  <td><b class="cell-strong">PO-10419</b><div class="cell-muted">Jan 21, 2026</div></td>
+                  <td class="cell-muted">BrightPack Packaging</td>
+                  <td class="cell-muted">Corrugated Boxes (4K)</td>
+                  <td class="cell-strong">$18,900</td>
+                  <td><span class="badge green">Delivered</span></td>
+                  <td><div class="progress"><div class="bar" style="width:100%;"></div></div></td>
+                </tr>
+                <tr data-filter="hold" data-search="po-10418 meridian steel steel sheets on hold">
+                  <td><b class="cell-strong">PO-10418</b><div class="cell-muted">Jan 19, 2026</div></td>
+                  <td class="cell-muted">Meridian Steel</td>
+                  <td class="cell-muted">Steel Sheets (60)</td>
+                  <td class="cell-strong">$96,400</td>
+                  <td><span class="badge red">On Hold</span></td>
+                  <td><div class="progress"><div class="bar" style="width:15%;"></div></div></td>
+                </tr>
+                <tr data-filter="delivered" data-search="po-10417 vitalmed supply medical gloves delivered">
+                  <td><b class="cell-strong">PO-10417</b><div class="cell-muted">Jan 15, 2026</div></td>
+                  <td class="cell-muted">VitalMed Supply</td>
+                  <td class="cell-muted">Medical Gloves (10K)</td>
+                  <td class="cell-strong">$12,300</td>
+                  <td><span class="badge green">Delivered</span></td>
+                  <td><div class="progress"><div class="bar" style="width:100%;"></div></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="empty-state js-table-empty" style="display:none;">
+            <div class="e-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg></div>
+            <b>No matching orders</b>
+            <p>Try adjusting your search or filter to find what you&rsquo;re looking for.</p>
+          </div>
+          <div class="pagination js-pagination"></div>
+        </div>
+      </section>
+
+      <!-- ========== VENDORS ========== -->
+      <section class="dash-page" id="vendors">
+        <div class="page-head">
+          <div>
+            <h2>Preferred Vendors</h2>
+            <p>Your vetted supplier network.</p>
+          </div>
+          <div class="page-head-actions">
+            <button type="button" class="btn btn-gold" data-action="toast" data-toast="A Stackly sourcing expert will reach out to expand your network.">Request New Vendor</button>
+          </div>
+        </div>
+
+        <div class="vendor-grid">
+          <div class="vendor-card">
+            <div class="v-head">
+              <span class="v-logo" style="background:linear-gradient(135deg,#f0a500,#d18f00);">MS</span>
+              <div><div class="v-name">Meridian Steel</div><div class="v-cat">Raw Materials</div></div>
+              <span class="badge gold" style="margin-left:auto;">Preferred</span>
+            </div>
+            <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg> <span style="color:var(--text-light);font-size:.75rem;">4.9</span></div>
+            <div class="v-stats">
+              <div class="v-stat"><b>12</b><span>Active Contracts</span></div>
+              <div class="v-stat"><b>98%</b><span>On-Time Delivery</span></div>
+            </div>
+            <div class="progress-row">
+              <span class="pl">Performance</span>
+              <div class="progress" style="flex:1;"><div class="bar" style="width:92%;"></div></div>
+              <span class="pv">92%</span>
+            </div>
+            <div class="row" style="margin-top:14px;justify-content:flex-end;">
+              <button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening vendor profile for Meridian Steel.">View Profile</button>
+            </div>
+          </div>
+
+          <div class="vendor-card">
+            <div class="v-head">
+              <span class="v-logo" style="background:linear-gradient(135deg,#2dd4bf,#14b8a6);">NL</span>
+              <div><div class="v-name">NovaFreight Logistics</div><div class="v-cat">Logistics</div></div>
+              <span class="badge gold" style="margin-left:auto;">Preferred</span>
+            </div>
+            <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg> <span style="color:var(--text-light);font-size:.75rem;">4.7</span></div>
+            <div class="v-stats">
+              <div class="v-stat"><b>9</b><span>Active Contracts</span></div>
+              <div class="v-stat"><b>96%</b><span>On-Time Delivery</span></div>
+            </div>
+            <div class="progress-row">
+              <span class="pl">Performance</span>
+              <div class="progress teal" style="flex:1;"><div class="bar" style="width:88%;"></div></div>
+              <span class="pv">88%</span>
+            </div>
+            <div class="row" style="margin-top:14px;justify-content:flex-end;">
+              <button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening vendor profile for NovaFreight.">View Profile</button>
+            </div>
+          </div>
+
+          <div class="vendor-card">
+            <div class="v-head">
+              <span class="v-logo" style="background:linear-gradient(135deg,#12345f,#0a1f3c);">CS</span>
+              <div><div class="v-name">CloudPeak Solutions</div><div class="v-cat">Technology</div></div>
+              <span class="badge gold" style="margin-left:auto;">Preferred</span>
+            </div>
+            <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg> <span style="color:var(--text-light);font-size:.75rem;">4.8</span></div>
+            <div class="v-stats">
+              <div class="v-stat"><b>7</b><span>Active Contracts</span></div>
+              <div class="v-stat"><b>99%</b><span>On-Time Delivery</span></div>
+            </div>
+            <div class="progress-row">
+              <span class="pl">Performance</span>
+              <div class="progress" style="flex:1;"><div class="bar" style="width:95%;"></div></div>
+              <span class="pv">95%</span>
+            </div>
+            <div class="row" style="margin-top:14px;justify-content:flex-end;">
+              <button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening vendor profile for CloudPeak.">View Profile</button>
+            </div>
+          </div>
+
+          <div class="vendor-card">
+            <div class="v-head">
+              <span class="v-logo" style="background:linear-gradient(135deg,#3b82f6,#2563eb);">BP</span>
+              <div><div class="v-name">BrightPack Packaging</div><div class="v-cat">FMCG / Packaging</div></div>
+              <span class="badge gold" style="margin-left:auto;">Preferred</span>
+            </div>
+            <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg> <span style="color:var(--text-light);font-size:.75rem;">4.5</span></div>
+            <div class="v-stats">
+              <div class="v-stat"><b>15</b><span>Active Contracts</span></div>
+              <div class="v-stat"><b>94%</b><span>On-Time Delivery</span></div>
+            </div>
+            <div class="progress-row">
+              <span class="pl">Performance</span>
+              <div class="progress blue" style="flex:1;"><div class="bar" style="width:84%;"></div></div>
+              <span class="pv">84%</span>
+            </div>
+            <div class="row" style="margin-top:14px;justify-content:flex-end;">
+              <button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening vendor profile for BrightPack.">View Profile</button>
+            </div>
+          </div>
+
+          <div class="vendor-card">
+            <div class="v-head">
+              <span class="v-logo" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">AC</span>
+              <div><div class="v-name">Atlas Components</div><div class="v-cat">Manufacturing</div></div>
+              <span class="badge gold" style="margin-left:auto;">Preferred</span>
+            </div>
+            <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg> <span style="color:var(--text-light);font-size:.75rem;">4.6</span></div>
+            <div class="v-stats">
+              <div class="v-stat"><b>8</b><span>Active Contracts</span></div>
+              <div class="v-stat"><b>91%</b><span>On-Time Delivery</span></div>
+            </div>
+            <div class="progress-row">
+              <span class="pl">Performance</span>
+              <div class="progress" style="flex:1;"><div class="bar" style="width:86%;"></div></div>
+              <span class="pv">86%</span>
+            </div>
+            <div class="row" style="margin-top:14px;justify-content:flex-end;">
+              <button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening vendor profile for Atlas Components.">View Profile</button>
+            </div>
+          </div>
+
+          <div class="vendor-card">
+            <div class="v-head">
+              <span class="v-logo" style="background:linear-gradient(135deg,#ef4444,#dc2626);">VM</span>
+              <div><div class="v-name">VitalMed Supply</div><div class="v-cat">Healthcare</div></div>
+              <span class="badge gold" style="margin-left:auto;">Preferred</span>
+            </div>
+            <div class="stars"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg> <span style="color:var(--text-light);font-size:.75rem;">4.9</span></div>
+            <div class="v-stats">
+              <div class="v-stat"><b>5</b><span>Active Contracts</span></div>
+              <div class="v-stat"><b>100%</b><span>On-Time Delivery</span></div>
+            </div>
+            <div class="progress-row">
+              <span class="pl">Performance</span>
+              <div class="progress teal" style="flex:1;"><div class="bar" style="width:97%;"></div></div>
+              <span class="pv">97%</span>
+            </div>
+            <div class="row" style="margin-top:14px;justify-content:flex-end;">
+              <button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening vendor profile for VitalMed Supply.">View Profile</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== REPORTS ========== -->
+      <section class="dash-page" id="reports">
+        <div class="page-head">
+          <div>
+            <h2>Reports &amp; Insights</h2>
+            <p>Spend analysis and savings performance.</p>
+          </div>
+          <div class="page-head-actions">
+            <button type="button" class="btn btn-outline">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+              Download PDF
+            </button>
+            <button type="button" class="btn btn-outline">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+              Export CSV
+            </button>
+          </div>
+        </div>
+
+        <div class="report-grid">
+          <div class="report-metric">
+            <span class="r-ic" style="background:linear-gradient(135deg,#f0a500,#d18f00);"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
+            <div><span>Total Managed Spend</span><b>$2.4M</b></div>
+          </div>
+          <div class="report-metric">
+            <span class="r-ic" style="background:linear-gradient(135deg,#14b8a6,#0d9488);"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></span>
+            <div><span>Savings Realized</span><b>$418K</b></div>
+          </div>
+          <div class="report-metric">
+            <span class="r-ic" style="background:linear-gradient(135deg,#3b82f6,#2563eb);"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></span>
+            <div><span>Avg. Sourcing Cycle</span><b>18 days</b></div>
+          </div>
+          <div class="report-metric">
+            <span class="r-ic" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);"><svg viewBox="0 0 24 24"><path d="M12 2 3 7v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7z"/><path d="M9 12l2 2 4-4"/></svg></span>
+            <div><span>Compliance Rate</span><b>96%</b></div>
+          </div>
+        </div>
+
+        <div class="grid-2 mt-18">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Monthly Spend</h3>
+                <div class="sub">Total procurement spend per month</div>
+              </div>
+              <div>
+                <button type="button" class="chip active" data-chart="bar" data-range="bar6m">6 Months</button>
+                <button type="button" class="chip" data-chart="bar" data-range="bar12m">12 Months</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-box">
+                <div class="chart-bar" data-js data-dataset="monthly" data-color="#12345f"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Savings by Category</h3>
+                <div class="sub">Where your savings came from</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="progress-row" style="margin-bottom:16px;">
+                <span class="pl">IT Hardware</span>
+                <div class="progress" style="flex:1;"><div class="bar" style="width:38%;"></div></div>
+                <span class="pv">38%</span>
+              </div>
+              <div class="progress-row" style="margin-bottom:16px;">
+                <span class="pl">Facilities</span>
+                <div class="progress teal" style="flex:1;"><div class="bar" style="width:22%;"></div></div>
+                <span class="pv">22%</span>
+              </div>
+              <div class="progress-row" style="margin-bottom:16px;">
+                <span class="pl">Marketing</span>
+                <div class="progress blue" style="flex:1;"><div class="bar" style="width:18%;"></div></div>
+                <span class="pv">18%</span>
+              </div>
+              <div class="progress-row" style="margin-bottom:16px;">
+                <span class="pl">Logistics</span>
+                <div class="progress" style="flex:1;"><div class="bar" style="width:12%;"></div></div>
+                <span class="pv">12%</span>
+              </div>
+              <div class="progress-row">
+                <span class="pl">Professional Services</span>
+                <div class="progress teal" style="flex:1;"><div class="bar" style="width:10%;"></div></div>
+                <span class="pv">10%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SETTINGS ========== -->
+      <section class="dash-page" id="settings">
+        <div class="page-head">
+          <div>
+            <h2>Account Settings</h2>
+            <p>Manage your profile and notification preferences.</p>
+          </div>
+        </div>
+
+        <div class="grid-2-eq">
+          <div class="card">
+            <div class="card-head"><h3>Profile Information</h3></div>
+            <div class="card-body">
+              <form data-settings novalidate>
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="setName">Full Name <span>*</span></label>
+                    <input type="text" class="form-control" id="setName" value="Sarah Lambert">
+                  </div>
+                  <div class="form-group">
+                    <label for="setEmail">Work Email <span>*</span></label>
+                    <input type="email" class="form-control" id="setEmail" value="sarah.lambert@novatech.com">
+                  </div>
+                  <div class="form-group">
+                    <label for="setCompany">Company</label>
+                    <input type="text" class="form-control" id="setCompany" value="NovaTech Industries">
+                  </div>
+                  <div class="form-group">
+                    <label for="setDept">Department</label>
+                    <select class="form-control" id="setDept">
+                      <option>Procurement</option>
+                      <option>Operations</option>
+                      <option>Finance</option>
+                      <option>IT</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="setPhone">Phone</label>
+                    <input type="tel" class="form-control" id="setPhone" value="+1 (212) 555-0199">
+                  </div>
+                  <div class="form-group">
+                    <label for="setTz">Time Zone</label>
+                    <select class="form-control" id="setTz">
+                      <option>Eastern Time (ET)</option>
+                      <option>Central Time (CT)</option>
+                      <option>Pacific Time (PT)</option>
+                      <option>GMT (London)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row mt-18">
+                  <button type="submit" class="btn btn-gold">Save Changes</button>
+                  <button type="button" class="btn btn-ghost">Cancel</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <div class="card-head"><h3>Notifications</h3></div>
+              <div class="card-body">
+                <div class="switch-row">
+                  <div class="s-txt"><b>Email notifications</b><span>Receive account updates by email</span></div>
+                  <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="switch-row">
+                  <div class="s-txt"><b>Order alerts</b><span>Track order status changes</span></div>
+                  <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="switch-row">
+                  <div class="s-txt"><b>Weekly summary</b><span>Spend and savings digest</span></div>
+                  <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="switch-row">
+                  <div class="s-txt"><b>Product updates</b><span>News about new portal features</span></div>
+                  <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <button type="button" class="btn btn-navy" data-action="toast" data-toast="Notification preferences saved." style="margin-top:18px;">Save Preferences</button>
+              </div>
+            </div>
+
+            <div class="card mt-18">
+              <div class="card-head"><h3>Security</h3></div>
+              <div class="card-body">
+                <p class="form-hint" style="margin-bottom:16px;">Keep your account protected. We recommend changing your password every 90 days.</p>
+                <div class="row">
+                  <button type="button" class="btn btn-outline" data-action="toast" data-toast="Password reset link sent to your email.">Change Password</button>
+                  <button type="button" class="btn btn-danger" data-logout>Sign Out</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===== New Request modal ===== -->
+  <div class="modal-backdrop" id="newRequestModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="newReqTitle">
+      <div class="modal-head">
+        <h3 id="newReqTitle">New Purchase Request</h3>
+        <button type="button" class="close-x" data-close-modal aria-label="Close"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <form data-modal-form data-success="Purchase request submitted for approval." novalidate>
+          <div class="form-group">
+            <label for="reqTitle">Request Title <span>*</span></label>
+            <input type="text" class="form-control" id="reqTitle" placeholder="e.g. Office laptops for Q2 onboarding">
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="reqCat">Category</label>
+              <select class="form-control" id="reqCat">
+                <option>IT Hardware</option>
+                <option>Facilities</option>
+                <option>Marketing</option>
+                <option>Logistics</option>
+                <option>Professional Services</option>
+                <option>Manufacturing</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="reqQty">Quantity</label>
+              <input type="number" class="form-control" id="reqQty" placeholder="e.g. 10" min="1">
+            </div>
+            <div class="form-group">
+              <label for="reqBudget">Estimated Budget ($)</label>
+              <input type="number" class="form-control" id="reqBudget" placeholder="e.g. 50000" min="0">
+            </div>
+            <div class="form-group">
+              <label for="reqDate">Need By</label>
+              <input type="date" class="form-control" id="reqDate">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="reqNotes">Additional Notes</label>
+            <textarea class="form-control" id="reqNotes" placeholder="Any specifications, delivery requirements or context for reviewers&hellip;"></textarea>
+          </div>
+          <div class="modal-foot" style="padding:0;border:none;margin-top:6px;">
+            <button type="button" class="btn btn-outline" data-close-modal>Cancel</button>
+            <button type="submit" class="btn btn-gold">Submit Request</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Chart data ===== -->
+  <script type="application/json" data-chart-data>
+  {
+    "6m": [
+      { "label": "Jan", "value": 820 },
+      { "label": "Feb", "value": 940 },
+      { "label": "Mar", "value": 890 },
+      { "label": "Apr", "value": 1050 },
+      { "label": "May", "value": 1120 },
+      { "label": "Jun", "value": 1180 }
+    ],
+    "3m": [
+      { "label": "Apr", "value": 1050 },
+      { "label": "May", "value": 1120 },
+      { "label": "Jun", "value": 1180 }
+    ],
+    "12m": [
+      { "label": "Jul", "value": 720 },
+      { "label": "Aug", "value": 760 },
+      { "label": "Sep", "value": 810 },
+      { "label": "Oct", "value": 780 },
+      { "label": "Nov", "value": 850 },
+      { "label": "Dec", "value": 830 },
+      { "label": "Jan", "value": 820 },
+      { "label": "Feb", "value": 940 },
+      { "label": "Mar", "value": 890 },
+      { "label": "Apr", "value": 1050 },
+      { "label": "May", "value": 1120 },
+      { "label": "Jun", "value": 1180 }
+    ],
+    "categories": [
+      { "label": "IT Hardware", "value": 38, "color": "#f0a500" },
+      { "label": "Facilities", "value": 22, "color": "#14b8a6" },
+      { "label": "Marketing", "value": 18, "color": "#12345f" },
+      { "label": "Logistics", "value": 12, "color": "#3b82f6" },
+      { "label": "Prof. Services", "value": 10, "color": "#8b5cf6" }
+    ],
+    "monthly": [
+      { "label": "Jan", "value": 520 },
+      { "label": "Feb", "value": 610 },
+      { "label": "Mar", "value": 590 },
+      { "label": "Apr", "value": 680 },
+      { "label": "May", "value": 720 },
+      { "label": "Jun", "value": 780 }
+    ],
+    "bar6m": [
+      { "label": "Jan", "value": 520 },
+      { "label": "Feb", "value": 610 },
+      { "label": "Mar", "value": 590 },
+      { "label": "Apr", "value": 680 },
+      { "label": "May", "value": 720 },
+      { "label": "Jun", "value": 780 }
+    ],
+    "bar12m": [
+      { "label": "Jul", "value": 420 },
+      { "label": "Aug", "value": 480 },
+      { "label": "Sep", "value": 510 },
+      { "label": "Oct", "value": 490 },
+      { "label": "Nov", "value": 550 },
+      { "label": "Dec", "value": 530 },
+      { "label": "Jan", "value": 520 },
+      { "label": "Feb", "value": 610 },
+      { "label": "Mar", "value": 590 },
+      { "label": "Apr", "value": 680 },
+      { "label": "May", "value": 720 },
+      { "label": "Jun", "value": 780 }
+    ]
+  }
+  </script>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

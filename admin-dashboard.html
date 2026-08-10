@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Stackly</title>
+  <meta name="description" content="Stackly admin dashboard — manage users, contracts, vendors and platform analytics.">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dash-body" data-role="admin">
+
+  <!-- ===== Sidebar ===== -->
+  <aside class="dash-sidebar" id="sidebar">
+    <a href="index.html" class="sidebar-brand">
+      <img src="assets/logo.webp" alt="Stackly">
+      <span class="brand-txt"><span>Admin Center</span></span>
+    </a>
+
+    <nav class="sidebar-scroll" aria-label="Admin navigation">
+      <p class="side-nav-label">Manage</p>
+
+      <button type="button" class="side-nav-item active" data-page="overview">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/></svg>
+        Overview
+      </button>
+
+      <button type="button" class="side-nav-item" data-page="users">
+        <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Users
+        <span class="nav-badge">12</span>
+      </button>
+
+      <button type="button" class="side-nav-item" data-page="contracts">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg>
+        Contracts
+        <span class="nav-badge">3</span>
+      </button>
+
+      <button type="button" class="side-nav-item" data-page="vendors">
+        <svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/><path d="M9 21v-4h6v4"/><path d="M9 10h.01M15 10h.01"/></svg>
+        Vendors
+      </button>
+
+      <p class="side-nav-label">Insights</p>
+
+      <button type="button" class="side-nav-item" data-page="analytics">
+        <svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v-4M12 15V8M17 15v-7"/></svg>
+        Analytics
+      </button>
+
+      <button type="button" class="side-nav-item" data-page="settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="sidebar-user">
+        <span class="avatar"><img src="assets/team-3.webp" alt="Ava Thompson"></span>
+        <div>
+          <div class="u-name">Ava Thompson</div>
+          <div class="u-role">Administrator</div>
+        </div>
+      </div>
+      <a href="index.html" class="back-site">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg>
+        Back to Website
+      </a>
+    </div>
+  </aside>
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+  <!-- ===== Main ===== -->
+  <div class="dash-main">
+
+    <!-- ===== Topbar ===== -->
+    <header class="dash-topbar">
+      <button type="button" class="topbar-menu-btn" id="menuToggle" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+      </button>
+
+      <div class="topbar-title">
+        <h1>Admin Center</h1>
+        <p id="todayDate">Platform management &amp; oversight.</p>
+      </div>
+
+      <div class="topbar-search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" placeholder="Search users, contracts, vendors&hellip;">
+      </div>
+
+      <div class="topbar-actions">
+
+        <div class="dropdown">
+          <button type="button" class="icon-btn" data-dropdown="notifDropdown" aria-label="Notifications">
+            <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="dot-indicator"></span>
+          </button>
+
+          <div class="dropdown-panel" id="notifDropdown">
+            <div class="dropdown-head">
+              <b>Notifications</b>
+              <button type="button">Mark all read</button>
+            </div>
+            <div class="dropdown-list">
+              <div class="dropdown-item">
+                <span class="d-icon red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg></span>
+                <div class="d-text"><p>3 contracts expiring soon</p><span>Renewal within the next 14 days.</span></div>
+                <span class="d-time">1h ago</span>
+              </div>
+              <div class="dropdown-item">
+                <span class="d-icon gold"><svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="0" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>
+                <div class="d-text"><p>12 new user signups</p><span>Two requested Admin access.</span></div>
+                <span class="d-time">4h ago</span>
+              </div>
+              <div class="dropdown-item">
+                <span class="d-icon blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg></span>
+                <div class="d-text"><p>Vendor review pending</p><span>Atlas Components submitted documents.</span></div>
+                <span class="d-time">8h ago</span>
+              </div>
+              <div class="dropdown-item">
+                <span class="d-icon teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></span>
+                <div class="d-text"><p>Weekly report generated</p><span>Revenue summary is ready to view.</span></div>
+                <span class="d-time">1d ago</span>
+              </div>
+            </div>
+            <div class="dropdown-foot"><a href="#" data-page="analytics">Open analytics</a></div>
+          </div>
+        </div>
+
+        <div class="dropdown">
+          <button type="button" class="profile-btn" data-dropdown="profileDropdown" aria-label="Account menu">
+            <span class="avatar sm"><img src="assets/team-3.webp" alt="Ava Thompson"></span>
+            <span>
+              <span class="p-name">Ava Thompson</span>
+              <span class="p-role" style="display:block;">Administrator</span>
+            </span>
+          </button>
+
+          <div class="dropdown-panel profile-menu" id="profileDropdown">
+            <button type="button" class="profile-menu-item" data-page="settings">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg>
+              My Profile
+            </button>
+            <button type="button" class="profile-menu-item" data-open-modal="addUserModal">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+              Add User
+            </button>
+            <button type="button" class="profile-menu-item" data-page="users">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+              Manage Users
+            </button>
+            <button type="button" class="profile-menu-item danger" data-logout>
+              <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+              Sign Out
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- ===== Content ===== -->
+    <main class="dash-content">
+
+      <!-- ========== OVERVIEW ========== -->
+      <section class="dash-page active" id="overview">
+        <div class="page-head">
+          <div>
+            <h2>Platform Overview</h2>
+            <p>Revenue, users and contracts across the network.</p>
+          </div>
+          <div class="page-head-actions">
+            <button type="button" class="btn btn-outline">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+              Export Report
+            </button>
+            <button type="button" class="btn btn-gold" data-open-modal="addUserModal">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+              Add User
+            </button>
+          </div>
+        </div>
+
+        <!-- KPI cards -->
+        <div class="kpi-grid">
+          <div class="kpi-card">
+            <div class="k-top">
+              <span class="kpi-ic gold"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
+              <span class="kpi-trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg> 9.4%</span>
+            </div>
+            <div class="k-label">Total Revenue</div>
+            <div class="k-value counter" data-target="6.8" data-decimals="1" data-prefix="$" data-suffix="M">0</div>
+            <div class="k-sub">vs. last quarter</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="k-top">
+              <span class="kpi-ic navy"><svg viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05"/><path d="M12 22.08V12"/></svg></span>
+              <span class="kpi-trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg> 14</span>
+            </div>
+            <div class="k-label">New Orders (Month)</div>
+            <div class="k-value counter" data-target="182">0</div>
+            <div class="k-sub">vs. 168 last month</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="k-top">
+              <span class="kpi-ic teal"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15l2 2 4-4"/></svg></span>
+              <span class="kpi-trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg> 8</span>
+            </div>
+            <div class="k-label">Active Contracts</div>
+            <div class="k-value counter" data-target="342">0</div>
+            <div class="k-sub">3 expiring soon</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="k-top">
+              <span class="kpi-ic blue"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+              <span class="kpi-trend up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg> 21</span>
+            </div>
+            <div class="k-label">Registered Users</div>
+            <div class="k-value counter" data-target="1284">0</div>
+            <div class="k-sub">12 new this week</div>
+          </div>
+        </div>
+
+        <!-- Quick actions -->
+        <div class="quick-actions">
+          <button type="button" class="qa-btn" data-open-modal="addUserModal">
+            <span class="qa-ic"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span>
+            <b>Add User</b>
+            <span>Invite a team member</span>
+          </button>
+          <button type="button" class="qa-btn" data-page="contracts">
+            <span class="qa-ic"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg></span>
+            <b>Review Contracts</b>
+            <span>3 renewals due soon</span>
+          </button>
+          <button type="button" class="qa-btn" data-page="vendors">
+            <span class="qa-ic"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/></svg></span>
+            <b>Manage Vendors</b>
+            <span>Onboard &amp; evaluate</span>
+          </button>
+          <button type="button" class="qa-btn" data-page="analytics">
+            <span class="qa-ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15v-4M12 15V8M17 15v-7"/></svg></span>
+            <b>Run Report</b>
+            <span>Platform analytics</span>
+          </button>
+        </div>
+
+        <!-- Charts row -->
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Revenue by Month</h3>
+                <div class="sub">Platform revenue (USD thousands)</div>
+              </div>
+              <div>
+                <button type="button" class="chip active" data-chart="bar" data-range="adminRevenue6m">6M</button>
+                <button type="button" class="chip" data-chart="bar" data-range="adminRevenue12m">12M</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-box">
+                <div class="chart-bar" data-js data-color="#f0a500"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Revenue by Region</h3>
+                <div class="sub">Current year distribution</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-box" style="text-align:center;">
+                <div class="chart-donut" data-js data-dataset="regions" data-center-title="Revenue" data-center-value="$6.8M" style="max-width:250px;margin:0 auto;"></div>
+                <div class="chart-legend" data-js-legend></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent users + activity -->
+        <div class="grid-2 mt-18">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Recent Users</h3>
+                <div class="sub">Latest registrations on the platform</div>
+              </div>
+              <button type="button" class="btn btn-ghost btn-sm" data-page="users">View All</button>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr><th>User</th><th>Role</th><th>Status</th><th>Joined</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td><div class="cell-user"><span class="avatar sm"><img src="assets/team-2.webp" alt="James Mitchell"></span><div><b>James Mitchell</b><span>james@apexmfg.com</span></div></div></td><td><span class="badge navy">Admin</span></td><td><span class="badge green">Active</span></td><td class="cell-muted">Feb 03, 2026</td></tr>
+                  <tr><td><div class="cell-user"><span class="avatar sm"><img src="assets/team-4.webp" alt="Rachel Osei"></span><div><b>Rachel Osei</b><span>rachel@cloudpeak.io</span></div></div></td><td><span class="badge blue">User</span></td><td><span class="badge green">Active</span></td><td class="cell-muted">Feb 01, 2026</td></tr>
+                  <tr><td><div class="cell-user"><span class="avatar sm" style="background:var(--navy-light);">MK</span><div><b>Marcus Kim</b><span>marcus@buildrite.co</span></div></div></td><td><span class="badge teal">Analyst</span></td><td><span class="badge amber">Invited</span></td><td class="cell-muted">Jan 30, 2026</td></tr>
+                  <tr><td><div class="cell-user"><span class="avatar sm" style="background:var(--navy-light);">DN</span><div><b>Dana Novak</b><span>dana@energix.com</span></div></div></td><td><span class="badge blue">User</span></td><td><span class="badge green">Active</span></td><td class="cell-muted">Jan 28, 2026</td></tr>
+                  <tr><td><div class="cell-user"><span class="avatar sm" style="background:var(--navy-light);">LP</span><div><b>Liam Park</b><span>liam@nexstep.io</span></div></div></td><td><span class="badge blue">User</span></td><td><span class="badge red">Suspended</span></td><td class="cell-muted">Jan 25, 2026</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>System Activity</h3>
+                <div class="sub">Platform events &amp; alerts</div>
+              </div>
+            </div>
+            <div class="activity-list">
+              <div class="activity-item">
+                <span class="a-ic" style="background:linear-gradient(135deg,#f0a500,#d18f00);"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
+                <div><p><b>Revenue milestone</b> &mdash; Platform crossed $6.8M managed spend.</p><span class="a-time">Today, 9:15 AM</span></div>
+              </div>
+              <div class="activity-item">
+                <span class="a-ic" style="background:linear-gradient(135deg,#3b82f6,#2563eb);"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg></span>
+                <div><p><b>User invited</b> &mdash; Marcus Kim added to the BuildRight account.</p><span class="a-time">Yesterday, 3:40 PM</span></div>
+              </div>
+              <div class="activity-item">
+                <span class="a-ic" style="background:linear-gradient(135deg,#14b8a6,#0d9488);"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M9 15l2 2 4-4"/></svg></span>
+                <div><p><b>Contract signed</b> &mdash; CloudPeak Solutions renewed for 12 months.</p><span class="a-time">Yesterday, 11:02 AM</span></div>
+              </div>
+              <div class="activity-item">
+                <span class="a-ic" style="background:linear-gradient(135deg,#ef4444,#dc2626);"><svg viewBox="0 0 24 24"><path d="M12 9v4m0 4h.01M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg></span>
+                <div><p><b>Alert</b> &mdash; 3 contracts expire within the next 14 days.</p><span class="a-time">Yesterday, 8:30 AM</span></div>
+              </div>
+              <div class="activity-item">
+                <span class="a-ic" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);"><svg viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M5 21V7l7-4 7 4v14"/></svg></span>
+                <div><p><b>Vendor update</b> &mdash; Atlas Components submitted compliance documents.</p><span class="a-time">Jan 29, 2026</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== USERS ========== -->
+      <section class="dash-page" id="users">
+        <div class="page-head">
+          <div>
+            <h2>Users</h2>
+            <p>Manage accounts, roles and access.</p>
+          </div>
+          <div class="page-head-actions">
+            <button type="button" class="btn btn-gold" data-open-modal="addUserModal">
+              <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6M22 11h-6"/></svg>
+              Add User
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-toolbar">
+            <div class="search-box">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+              <input type="text" class="js-table-search" placeholder="Search users&hellip;">
+            </div>
+            <select class="filter-select js-table-filter">
+              <option value="">All roles</option>
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+              <option value="analyst">Analyst</option>
+            </select>
+            <select class="filter-select js-table-filter">
+              <option value="">All statuses</option>
+              <option value="active">Active</option>
+              <option value="invited">Invited</option>
+              <option value="suspended">Suspended</option>
+            </select>
+            <span class="js-page-info" style="margin-left:auto;font-size:.8rem;color:var(--text-light);"></span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table" id="usersTable" data-table="users" data-page-size="50">
+              <thead>
+                <tr><th>User</th><th>Role</th><th>Company</th><th>Status</th><th>Joined</th><th style="text-align:right;">Actions</th></tr>
+              </thead>
+              <tbody>
+                <tr data-filter="admin active" data-search="ava thompson ava@stackly.com stackly administrator">
+                  <td><div class="cell-user"><span class="avatar sm"><img src="assets/team-3.webp" alt="Ava Thompson"></span><div><b>Ava Thompson</b><span>ava@stackly.com</span></div></div></td>
+                  <td><span class="badge navy">Admin</span></td>
+                  <td class="cell-muted">Stackly</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td class="cell-muted">Jan 05, 2026</td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="edit" data-modal="editUserModal">Edit</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="user">Delete</button></div></td>
+                </tr>
+                <tr data-filter="user active" data-search="james mitchell james@apexmfg.com apex manufacturing procurement">
+                  <td><div class="cell-user"><span class="avatar sm"><img src="assets/team-2.webp" alt="James Mitchell"></span><div><b>James Mitchell</b><span>james@apexmfg.com</span></div></div></td>
+                  <td><span class="badge navy">Admin</span></td>
+                  <td class="cell-muted">Apex Manufacturing</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td class="cell-muted">Feb 03, 2026</td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="edit" data-modal="editUserModal">Edit</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="user">Delete</button></div></td>
+                </tr>
+                <tr data-filter="user active" data-search="rachel osei rachel@cloudpeak.io cloudpeak procurement">
+                  <td><div class="cell-user"><span class="avatar sm"><img src="assets/team-4.webp" alt="Rachel Osei"></span><div><b>Rachel Osei</b><span>rachel@cloudpeak.io</span></div></div></td>
+                  <td><span class="badge blue">User</span></td>
+                  <td class="cell-muted">CloudPeak</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td class="cell-muted">Feb 01, 2026</td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="edit" data-modal="editUserModal">Edit</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="user">Delete</button></div></td>
+                </tr>
+                <tr data-filter="analyst invited" data-search="marcus kim marcus@buildrite.co buildright analyst">
+                  <td><div class="cell-user"><span class="avatar sm" style="background:var(--navy-light);">MK</span><div><b>Marcus Kim</b><span>marcus@buildrite.co</span></div></div></td>
+                  <td><span class="badge teal">Analyst</span></td>
+                  <td class="cell-muted">BuildRight</td>
+                  <td><span class="badge amber">Invited</span></td>
+                  <td class="cell-muted">Jan 30, 2026</td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="edit" data-modal="editUserModal">Edit</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="user">Delete</button></div></td>
+                </tr>
+                <tr data-filter="user active" data-search="dana novak dana@energix.com energix energy">
+                  <td><div class="cell-user"><span class="avatar sm" style="background:var(--navy-light);">DN</span><div><b>Dana Novak</b><span>dana@energix.com</span></div></div></td>
+                  <td><span class="badge blue">User</span></td>
+                  <td class="cell-muted">Energix</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td class="cell-muted">Jan 28, 2026</td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="edit" data-modal="editUserModal">Edit</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="user">Delete</button></div></td>
+                </tr>
+                <tr data-filter="user suspended" data-search="liam park liam@nexstep.io nexstep">
+                  <td><div class="cell-user"><span class="avatar sm" style="background:var(--navy-light);">LP</span><div><b>Liam Park</b><span>liam@nexstep.io</span></div></div></td>
+                  <td><span class="badge blue">User</span></td>
+                  <td class="cell-muted">NexStep</td>
+                  <td><span class="badge red">Suspended</span></td>
+                  <td class="cell-muted">Jan 25, 2026</td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="edit" data-modal="editUserModal">Edit</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="user">Delete</button></div></td>
+                </tr>
+                <tr data-filter="user active" data-search="sofia rossi sofia@terraform.it terraform">
+                  <td><div class="cell-user"><span class="avatar sm" style="background:var(--navy-light);">SR</span><div><b>Sofia Rossi</b><span>sofia@terraform.it</span></div></div></td>
+                  <td><span class="badge blue">User</span></td>
+                  <td class="cell-muted">Terraform</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td class="cell-muted">Jan 22, 2026</td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="edit" data-modal="editUserModal">Edit</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="user">Delete</button></div></td>
+                </tr>
+                <tr data-filter="analyst active" data-search="noah walsh noah@logistx.com logistx analyst">
+                  <td><div class="cell-user"><span class="avatar sm" style="background:var(--navy-light);">NW</span><div><b>Noah Walsh</b><span>noah@logistx.com</span></div></div></td>
+                  <td><span class="badge teal">Analyst</span></td>
+                  <td class="cell-muted">LogistX</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td class="cell-muted">Jan 20, 2026</td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="edit" data-modal="editUserModal">Edit</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="user">Delete</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="empty-state js-table-empty" style="display:none;">
+            <div class="e-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg></div>
+            <b>No matching users</b>
+            <p>Try adjusting your search or filter to find what you&rsquo;re looking for.</p>
+          </div>
+          <div class="pagination js-pagination"></div>
+        </div>
+      </section>
+
+      <!-- ========== CONTRACTS ========== -->
+      <section class="dash-page" id="contracts">
+        <div class="page-head">
+          <div>
+            <h2>Contracts</h2>
+            <p>Track contract value, renewals and status.</p>
+          </div>
+          <div class="page-head-actions">
+            <button type="button" class="btn btn-gold" data-action="toast" data-toast="Contract creation wizard opened.">New Contract</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-toolbar">
+            <div class="search-box">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+              <input type="text" class="js-table-search" placeholder="Search contracts&hellip;">
+            </div>
+            <select class="filter-select js-table-filter">
+              <option value="">All statuses</option>
+              <option value="active">Active</option>
+              <option value="expiring">Expiring</option>
+              <option value="expired">Expired</option>
+              <option value="draft">Draft</option>
+            </select>
+            <span class="js-page-info" style="margin-left:auto;font-size:.8rem;color:var(--text-light);"></span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table" data-table="contracts" data-page-size="50">
+              <thead>
+                <tr><th>Contract</th><th>Vendor</th><th>Value</th><th>Start Date</th><th>Renewal</th><th>Status</th><th style="text-align:right;">Action</th></tr>
+              </thead>
+              <tbody>
+                <tr data-filter="active" data-search="ct-2041 software licensing agreement cloudpeak solutions active">
+                  <td><b class="cell-strong">CT-2041 Software Licensing</b></td>
+                  <td class="cell-muted">CloudPeak Solutions</td>
+                  <td class="cell-strong">$420,000</td>
+                  <td class="cell-muted">Feb 01, 2026</td>
+                  <td class="cell-muted">Feb 01, 2027</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening contract CT-2041.">View</button></td>
+                </tr>
+                <tr data-filter="expiring" data-search="ct-2038 steel supply agreement meridian steel expiring">
+                  <td><b class="cell-strong">CT-2038 Steel Supply</b></td>
+                  <td class="cell-muted">Meridian Steel</td>
+                  <td class="cell-strong">$1,250,000</td>
+                  <td class="cell-muted">Jan 15, 2025</td>
+                  <td class="cell-muted">Feb 24, 2026</td>
+                  <td><span class="badge amber">Expiring</span></td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-navy btn-sm" data-action="toast" data-toast="Renewal workflow started for CT-2038.">Renew</button></td>
+                </tr>
+                <tr data-filter="active" data-search="ct-2036 freight services novafreight logistics active">
+                  <td><b class="cell-strong">CT-2036 Freight Services</b></td>
+                  <td class="cell-muted">NovaFreight Logistics</td>
+                  <td class="cell-strong">$380,000</td>
+                  <td class="cell-muted">Mar 01, 2025</td>
+                  <td class="cell-muted">Mar 01, 2026</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening contract CT-2036.">View</button></td>
+                </tr>
+                <tr data-filter="expired" data-search="ct-2031 packaging supply brightpack packaging expired">
+                  <td><b class="cell-strong">CT-2031 Packaging Supply</b></td>
+                  <td class="cell-muted">BrightPack Packaging</td>
+                  <td class="cell-strong">$210,000</td>
+                  <td class="cell-muted">Nov 10, 2024</td>
+                  <td class="cell-muted">Nov 10, 2025</td>
+                  <td><span class="badge red">Expired</span></td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-navy btn-sm" data-action="toast" data-toast="Renegotiation with BrightPack started.">Renegotiate</button></td>
+                </tr>
+                <tr data-filter="draft" data-search="ct-2042 medical supplies vitalmed supply draft">
+                  <td><b class="cell-strong">CT-2042 Medical Supplies</b></td>
+                  <td class="cell-muted">VitalMed Supply</td>
+                  <td class="cell-strong">$150,000</td>
+                  <td class="cell-muted">&mdash;</td>
+                  <td class="cell-muted">&mdash;</td>
+                  <td><span class="badge navy">Draft</span></td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Editing draft contract CT-2042.">Edit</button></td>
+                </tr>
+                <tr data-filter="active" data-search="ct-2039 electronics components atlas components active">
+                  <td><b class="cell-strong">CT-2039 Electronics Components</b></td>
+                  <td class="cell-muted">Atlas Components</td>
+                  <td class="cell-strong">$680,000</td>
+                  <td class="cell-muted">Jun 01, 2025</td>
+                  <td class="cell-muted">Jun 01, 2026</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening contract CT-2039.">View</button></td>
+                </tr>
+                <tr data-filter="active" data-search="ct-2040 it hardware dell stackly active">
+                  <td><b class="cell-strong">CT-2040 IT Hardware</b></td>
+                  <td class="cell-muted">Dell Technologies</td>
+                  <td class="cell-strong">$540,000</td>
+                  <td class="cell-muted">Sep 15, 2025</td>
+                  <td class="cell-muted">Sep 15, 2026</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening contract CT-2040.">View</button></td>
+                </tr>
+                <tr data-filter="expiring" data-search="ct-2035 marketing agency retainer creative lab expiring">
+                  <td><b class="cell-strong">CT-2035 Marketing Retainer</b></td>
+                  <td class="cell-muted">Creative Lab Agency</td>
+                  <td class="cell-strong">$96,000</td>
+                  <td class="cell-muted">Feb 20, 2025</td>
+                  <td class="cell-muted">Feb 20, 2026</td>
+                  <td><span class="badge amber">Expiring</span></td>
+                  <td style="text-align:right;"><button type="button" class="btn btn-navy btn-sm" data-action="toast" data-toast="Renewal workflow started for CT-2035.">Renew</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="empty-state js-table-empty" style="display:none;">
+            <div class="e-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg></div>
+            <b>No matching contracts</b>
+            <p>Try adjusting your search or filter to find what you&rsquo;re looking for.</p>
+          </div>
+          <div class="pagination js-pagination"></div>
+        </div>
+      </section>
+
+      <!-- ========== VENDORS ========== -->
+      <section class="dash-page" id="vendors">
+        <div class="page-head">
+          <div>
+            <h2>Vendors</h2>
+            <p>Evaluate supplier performance and compliance.</p>
+          </div>
+          <div class="page-head-actions">
+            <button type="button" class="btn btn-gold" data-action="toast" data-toast="Vendor onboarding workflow started.">Onboard Vendor</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="table-toolbar">
+            <div class="search-box">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
+              <input type="text" class="js-table-search" placeholder="Search vendors&hellip;">
+            </div>
+            <select class="filter-select js-table-filter">
+              <option value="">All statuses</option>
+              <option value="active">Active</option>
+              <option value="review">Under Review</option>
+              <option value="suspended">Suspended</option>
+            </select>
+            <span class="js-page-info" style="margin-left:auto;font-size:.8rem;color:var(--text-light);"></span>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table" data-table="vendors" data-page-size="50">
+              <thead>
+                <tr><th>Vendor</th><th style="width:200px;">Performance</th><th>On-Time</th><th>Contracts</th><th>Status</th><th style="text-align:right;">Actions</th></tr>
+              </thead>
+              <tbody>
+                <tr data-filter="active" data-search="meridian steel raw materials active">
+                  <td><div class="cell-user"><span class="avatar sm" style="background:linear-gradient(135deg,#f0a500,#d18f00);">MS</span><div><b>Meridian Steel</b><span>Raw Materials</span></div></div></td>
+                  <td><div class="progress-row"><div class="progress" style="flex:1;"><div class="bar" style="width:92%;"></div></div><span class="pv">92%</span></div></td>
+                  <td class="cell-muted">98%</td>
+                  <td class="cell-strong">12</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening Meridian Steel profile.">View</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="vendor">Delete</button></div></td>
+                </tr>
+                <tr data-filter="active" data-search="novafreight logistics logistics active">
+                  <td><div class="cell-user"><span class="avatar sm" style="background:linear-gradient(135deg,#2dd4bf,#14b8a6);">NL</span><div><b>NovaFreight Logistics</b><span>Logistics</span></div></div></td>
+                  <td><div class="progress-row"><div class="progress teal" style="flex:1;"><div class="bar" style="width:88%;"></div></div><span class="pv">88%</span></div></td>
+                  <td class="cell-muted">96%</td>
+                  <td class="cell-strong">9</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening NovaFreight profile.">View</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="vendor">Delete</button></div></td>
+                </tr>
+                <tr data-filter="active" data-search="cloudpeak solutions technology active">
+                  <td><div class="cell-user"><span class="avatar sm" style="background:linear-gradient(135deg,#12345f,#0a1f3c);">CS</span><div><b>CloudPeak Solutions</b><span>Technology</span></div></div></td>
+                  <td><div class="progress-row"><div class="progress" style="flex:1;"><div class="bar" style="width:95%;"></div></div><span class="pv">95%</span></div></td>
+                  <td class="cell-muted">99%</td>
+                  <td class="cell-strong">7</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening CloudPeak profile.">View</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="vendor">Delete</button></div></td>
+                </tr>
+                <tr data-filter="active" data-search="brightpack packaging fmcg packaging active">
+                  <td><div class="cell-user"><span class="avatar sm" style="background:linear-gradient(135deg,#3b82f6,#2563eb);">BP</span><div><b>BrightPack Packaging</b><span>FMCG / Packaging</span></div></div></td>
+                  <td><div class="progress-row"><div class="progress blue" style="flex:1;"><div class="bar" style="width:84%;"></div></div><span class="pv">84%</span></div></td>
+                  <td class="cell-muted">94%</td>
+                  <td class="cell-strong">15</td>
+                  <td><span class="badge green">Active</span></td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening BrightPack profile.">View</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="vendor">Delete</button></div></td>
+                </tr>
+                <tr data-filter="review" data-search="atlas components manufacturing under review">
+                  <td><div class="cell-user"><span class="avatar sm" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">AC</span><div><b>Atlas Components</b><span>Manufacturing</span></div></div></td>
+                  <td><div class="progress-row"><div class="progress" style="flex:1;"><div class="bar" style="width:86%;"></div></div><span class="pv">86%</span></div></td>
+                  <td class="cell-muted">91%</td>
+                  <td class="cell-strong">8</td>
+                  <td><span class="badge amber">Under Review</span></td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Reviewing Atlas compliance documents.">View</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="vendor">Delete</button></div></td>
+                </tr>
+                <tr data-filter="suspended" data-search="vitalmed supply healthcare suspended">
+                  <td><div class="cell-user"><span class="avatar sm" style="background:linear-gradient(135deg,#ef4444,#dc2626);">VM</span><div><b>VitalMed Supply</b><span>Healthcare</span></div></div></td>
+                  <td><div class="progress-row"><div class="progress teal" style="flex:1;"><div class="bar" style="width:97%;"></div></div><span class="pv">97%</span></div></td>
+                  <td class="cell-muted">100%</td>
+                  <td class="cell-strong">5</td>
+                  <td><span class="badge red">Suspended</span></td>
+                  <td style="text-align:right;"><div class="row" style="justify-content:flex-end;"><button type="button" class="btn btn-outline btn-sm" data-action="toast" data-toast="Opening VitalMed profile.">View</button><button type="button" class="btn btn-ghost btn-sm" data-action="delete" data-label="vendor">Delete</button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="empty-state js-table-empty" style="display:none;">
+            <div class="e-ic"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg></div>
+            <b>No matching vendors</b>
+            <p>Try adjusting your search or filter to find what you&rsquo;re looking for.</p>
+          </div>
+          <div class="pagination js-pagination"></div>
+        </div>
+      </section>
+
+      <!-- ========== ANALYTICS ========== -->
+      <section class="dash-page" id="analytics">
+        <div class="page-head">
+          <div>
+            <h2>Analytics</h2>
+            <p>Deep-dive platform performance metrics.</p>
+          </div>
+          <div class="page-head-actions">
+            <button type="button" class="btn btn-outline">
+              <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+              Export Data
+            </button>
+          </div>
+        </div>
+
+        <div class="report-grid">
+          <div class="report-metric">
+            <span class="r-ic" style="background:linear-gradient(135deg,#f0a500,#d18f00);"><svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></span>
+            <div><span>Total Revenue</span><b>$6.8M</b></div>
+          </div>
+          <div class="report-metric">
+            <span class="r-ic" style="background:linear-gradient(135deg,#3b82f6,#2563eb);"><svg viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></span>
+            <div><span>Total Orders</span><b>1,204</b></div>
+          </div>
+          <div class="report-metric">
+            <span class="r-ic" style="background:linear-gradient(135deg,#14b8a6,#0d9488);"><svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+            <div><span>Avg. Order Value</span><b>$5,650</b></div>
+          </div>
+          <div class="report-metric">
+            <span class="r-ic" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M9 15l2 2 4-4"/></svg></span>
+            <div><span>Contract Value</span><b>$12.4M</b></div>
+          </div>
+        </div>
+
+        <div class="grid-2 mt-18">
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Orders per Month</h3>
+                <div class="sub">Number of purchase orders</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-box">
+                <div class="chart-bar" data-js data-dataset="adminOrders6m" data-color="#3b82f6"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head">
+              <div>
+                <h3>Savings Trend</h3>
+                <div class="sub">Cumulative client savings (USD)</div>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chart-box">
+                <div class="chart-line" data-js data-color="#14b8a6"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card mt-18">
+          <div class="card-head">
+            <div>
+              <h3>Top Vendors by Spend</h3>
+              <div class="sub">Highest value supplier relationships</div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Vendor</th><th>Category</th><th>Total Spend</th><th>Share</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="cell-strong">Meridian Steel</td><td class="cell-muted">Raw Materials</td><td class="cell-strong">$1.85M</td><td><div class="progress-row"><div class="progress" style="flex:1;max-width:160px;"><div class="bar" style="width:78%;"></div></div><span class="pv">78%</span></div></td></tr>
+                <tr><td class="cell-strong">CloudPeak Solutions</td><td class="cell-muted">Technology</td><td class="cell-strong">$1.24M</td><td><div class="progress-row"><div class="progress teal" style="flex:1;max-width:160px;"><div class="bar" style="width:62%;"></div></div><span class="pv">62%</span></div></td></tr>
+                <tr><td class="cell-strong">Atlas Components</td><td class="cell-muted">Manufacturing</td><td class="cell-strong">$980K</td><td><div class="progress-row"><div class="progress blue" style="flex:1;max-width:160px;"><div class="bar" style="width:54%;"></div></div><span class="pv">54%</span></div></td></tr>
+                <tr><td class="cell-strong">NovaFreight Logistics</td><td class="cell-muted">Logistics</td><td class="cell-strong">$860K</td><td><div class="progress-row"><div class="progress" style="flex:1;max-width:160px;"><div class="bar" style="width:47%;"></div></div><span class="pv">47%</span></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== SETTINGS ========== -->
+      <section class="dash-page" id="settings">
+        <div class="page-head">
+          <div>
+            <h2>System Settings</h2>
+            <p>Configure the platform and your admin profile.</p>
+          </div>
+        </div>
+
+        <div class="grid-2-eq">
+          <div class="card">
+            <div class="card-head"><h3>Admin Profile</h3></div>
+            <div class="card-body">
+              <form data-settings novalidate>
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="admName">Full Name <span>*</span></label>
+                    <input type="text" class="form-control" id="admName" value="Ava Thompson">
+                  </div>
+                  <div class="form-group">
+                    <label for="admEmail">Email <span>*</span></label>
+                    <input type="email" class="form-control" id="admEmail" value="ava@stackly.com">
+                  </div>
+                  <div class="form-group">
+                    <label for="admPhone">Phone</label>
+                    <input type="tel" class="form-control" id="admPhone" value="+1 (800) 555-0199">
+                  </div>
+                  <div class="form-group">
+                    <label for="admRegion">Region</label>
+                    <select class="form-control" id="admRegion">
+                      <option>Americas HQ</option>
+                      <option>EMEA</option>
+                      <option>APAC</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="row mt-18">
+                  <button type="submit" class="btn btn-gold">Save Profile</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div>
+            <div class="card">
+              <div class="card-head"><h3>Platform Settings</h3></div>
+              <div class="card-body">
+                <div class="switch-row">
+                  <div class="s-txt"><b>User registrations</b><span>Allow new sign-ups on the site</span></div>
+                  <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="switch-row">
+                  <div class="s-txt"><b>Auto-approve requests</b><span>Skip manual approval for low value</span></div>
+                  <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <div class="switch-row">
+                  <div class="s-txt"><b>Weekly email digests</b><span>Send summary reports to admins</span></div>
+                  <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <div class="switch-row">
+                  <div class="s-txt"><b>Maintenance mode</b><span>Temporarily disable the portal</span></div>
+                  <label class="switch"><input type="checkbox"><span class="slider"></span></label>
+                </div>
+                <button type="button" class="btn btn-navy" data-action="toast" data-toast="Platform settings saved." style="margin-top:18px;">Save Settings</button>
+              </div>
+            </div>
+
+            <div class="card mt-18">
+              <div class="card-head"><h3>Security</h3></div>
+              <div class="card-body">
+                <div class="switch-row">
+                  <div class="s-txt"><b>Two-factor authentication</b><span>Required for all admin accounts</span></div>
+                  <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+                </div>
+                <p class="form-hint" style="margin:14px 0;">Session timeout applies after 30 minutes of inactivity.</p>
+                <div class="row">
+                  <button type="button" class="btn btn-outline" data-action="toast" data-toast="API keys regenerated. Old keys revoked.">Regenerate API Keys</button>
+                  <button type="button" class="btn btn-danger" data-action="toast" data-toast="An export link has been emailed to you.">Export All Data</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===== Add User modal ===== -->
+  <div class="modal-backdrop" id="addUserModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="addUserTitle">
+      <div class="modal-head">
+        <h3 id="addUserTitle">Add New User</h3>
+        <button type="button" class="close-x" data-close-modal aria-label="Close"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <form data-admin-user="usersTable" novalidate>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="addName">Full Name <span>*</span></label>
+              <input type="text" class="form-control" id="addName" placeholder="e.g. Jordan Lee">
+            </div>
+            <div class="form-group">
+              <label for="addEmail">Email <span>*</span></label>
+              <input type="email" class="form-control" id="addEmail" placeholder="jordan@gmail.com">
+            </div>
+            <div class="form-group">
+              <label for="addRole">Role</label>
+              <select class="form-control" id="addRole">
+                <option>User</option>
+                <option>Analyst</option>
+                <option>Admin</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="addStatus">Status</label>
+              <select class="form-control" id="addStatus">
+                <option>Active</option>
+                <option>Invited</option>
+                <option>Suspended</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="addCompany">Company</label>
+              <input type="text" class="form-control" id="addCompany" placeholder="e.g. NovaTech Industries">
+            </div>
+          </div>
+          <div class="modal-foot" style="padding:0;border:none;margin-top:6px;">
+            <button type="button" class="btn btn-outline" data-close-modal>Cancel</button>
+            <button type="submit" class="btn btn-gold">Create &amp; Invite</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Edit User modal ===== -->
+  <div class="modal-backdrop" id="editUserModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="editUserTitle">
+      <div class="modal-head">
+        <h3 id="editUserTitle">Edit User</h3>
+        <button type="button" class="close-x" data-close-modal aria-label="Close"><svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+      </div>
+      <div class="modal-body">
+        <form data-modal-form data-success="User profile updated." novalidate>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="editName">Full Name <span>*</span></label>
+              <input type="text" class="form-control" id="editName">
+            </div>
+            <div class="form-group">
+              <label for="editEmail">Email <span>*</span></label>
+              <input type="email" class="form-control" id="editEmail">
+            </div>
+            <div class="form-group">
+              <label for="editRole">Role</label>
+              <select class="form-control" id="editRole">
+                <option>User</option>
+                <option>Analyst</option>
+                <option>Admin</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="editStatus">Status</label>
+              <select class="form-control" id="editStatus">
+                <option>Active</option>
+                <option>Invited</option>
+                <option>Suspended</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-foot" style="padding:0;border:none;margin-top:6px;">
+            <button type="button" class="btn btn-outline" data-close-modal>Cancel</button>
+            <button type="submit" class="btn btn-gold">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Chart data ===== -->
+  <script type="application/json" data-chart-data>
+  {
+    "adminRevenue6m": [
+      { "label": "Jan", "value": 420 },
+      { "label": "Feb", "value": 520 },
+      { "label": "Mar", "value": 610 },
+      { "label": "Apr", "value": 560 },
+      { "label": "May", "value": 680 },
+      { "label": "Jun", "value": 760 }
+    ],
+    "adminRevenue12m": [
+      { "label": "Jul", "value": 350 },
+      { "label": "Aug", "value": 390 },
+      { "label": "Sep", "value": 440 },
+      { "label": "Oct", "value": 420 },
+      { "label": "Nov", "value": 500 },
+      { "label": "Dec", "value": 480 },
+      { "label": "Jan", "value": 420 },
+      { "label": "Feb", "value": 520 },
+      { "label": "Mar", "value": 610 },
+      { "label": "Apr", "value": 560 },
+      { "label": "May", "value": 680 },
+      { "label": "Jun", "value": 760 }
+    ],
+    "regions": [
+      { "label": "Americas", "value": 46, "color": "#f0a500" },
+      { "label": "EMEA", "value": 30, "color": "#12345f" },
+      { "label": "APAC", "value": 24, "color": "#14b8a6" }
+    ],
+    "adminOrders6m": [
+      { "label": "Jan", "value": 140 },
+      { "label": "Feb", "value": 165 },
+      { "label": "Mar", "value": 152 },
+      { "label": "Apr", "value": 178 },
+      { "label": "May", "value": 190 },
+      { "label": "Jun", "value": 205 }
+    ],
+    "6m": [
+      { "label": "Jan", "value": 320 },
+      { "label": "Feb", "value": 340 },
+      { "label": "Mar", "value": 355 },
+      { "label": "Apr", "value": 370 },
+      { "label": "May", "value": 392 },
+      { "label": "Jun", "value": 418 }
+    ]
+  }
+  </script>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
