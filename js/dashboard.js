@@ -91,11 +91,19 @@
       } catch (err) { /* ignore */ }
     }
 
+    var lockScrollPos = 0;
+
     function setSidebar(open) {
       if (sidebar) sidebar.classList.toggle('open', open);
       if (backdrop) backdrop.classList.toggle('show', open);
-      document.documentElement.classList.toggle('no-scroll', open);
       document.body.classList.toggle('no-scroll', open);
+      if (open) {
+        lockScrollPos = window.scrollY || window.pageYOffset || 0;
+        document.body.style.top = '-' + lockScrollPos + 'px';
+      } else {
+        document.body.style.top = '';
+        window.scrollTo({ top: lockScrollPos, left: 0, behavior: 'instant' });
+      }
     }
 
     if (menuBtn) {
@@ -607,6 +615,11 @@
     return String(n);
   }
 
+  function chartWidth(node) {
+    var w = node.clientWidth || 0;
+    return Math.min(620, Math.max(300, w));
+  }
+
   function renderLineChart(range) {
     range = range || getActiveChip('line') || '6m';
     var data = dataset(range);
@@ -617,7 +630,7 @@
       var labels = data.map(function (d) { return d.label; });
       var values = data.map(function (d) { return d.value; });
       var color = node.getAttribute('data-color') || '#f0a500';
-      node.innerHTML = buildLineSvg(labels, values, color);
+      node.innerHTML = buildLineSvg(labels, values, color, chartWidth(node));
       var line = node.querySelector('.chart-line-anim');
       if (line) {
         var len = line.getAttribute('stroke-dasharray') || '0';
@@ -629,8 +642,9 @@
     });
   }
 
-  function buildLineSvg(labels, values, color) {
-    var W = 620, H = 250, PL = 46, PR = 14, PT = 16, PB = 30;
+  function buildLineSvg(labels, values, color, W) {
+    W = W || 620;
+    var H = 250, PL = 46, PR = 14, PT = 16, PB = 30;
     var iw = W - PL - PR, ih = H - PT - PB;
 
     var max = Math.max.apply(null, values) * 1.15;
@@ -656,7 +670,9 @@
     }
 
     var xlabels = '';
+    var labelStep = labels.length > 8 && W < 520 ? 2 : 1;
     labels.forEach(function (l, i) {
+      if (i % labelStep !== 0) return;
       xlabels += '<text x="' + X(i) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="#9aa7b8">' + l + '</text>';
     });
 
@@ -711,7 +727,7 @@
       var labels = data.map(function (d) { return d.label; });
       var values = data.map(function (d) { return d.value; });
       var color = node.getAttribute('data-color') || '#12345f';
-      node.innerHTML = buildBarSvg(labels, values, color);
+      node.innerHTML = buildBarSvg(labels, values, color, chartWidth(node));
       requestAnimationFrame(function () {
         requestAnimationFrame(function () {
           node.querySelectorAll('.chart-bar-anim').forEach(function (bar) {
@@ -722,14 +738,16 @@
     });
   }
 
-  function buildBarSvg(labels, values, color) {
-    var W = 620, H = 250, PL = 46, PR = 14, PT = 16, PB = 30;
+  function buildBarSvg(labels, values, color, W) {
+    W = W || 620;
+    var H = 250, PL = 46, PR = 14, PT = 16, PB = 30;
     var iw = W - PL - PR, ih = H - PT - PB;
     var max = Math.max.apply(null, values) * 1.15;
     var range = max || 1;
     var slot = iw / labels.length;
     var bw = Math.min(46, slot * 0.55);
     var base = PT + ih;
+    var showValues = slot > 42;
 
     var grid = '';
     for (var g = 0; g <= 4; g++) {
@@ -744,10 +762,13 @@
       var h = (values[i] / range) * ih;
       var x = PL + slot * i + (slot - bw) / 2;
       var y = base - h;
+      var valueText = showValues
+        ? '<text x="' + (x + bw / 2).toFixed(2) + '" y="' + (base - 12) + '" text-anchor="middle" font-size="11" font-weight="700" fill="#0a1f3c">' + fmtNum(values[i]) + '</text>'
+        : '';
       bars +=
         '<g class="chart-bar-anim" style="transform-origin:' + (x + bw / 2) + 'px ' + base + 'px;">' +
         '<rect x="' + x.toFixed(2) + '" y="' + y.toFixed(2) + '" width="' + bw.toFixed(2) + '" height="' + h.toFixed(2) + '" rx="6" fill="' + color + '" opacity="0.92"><title>' + l + ': ' + fmtNum(values[i]) + '</title></rect>' +
-        '<text x="' + (x + bw / 2).toFixed(2) + '" y="' + (base - 12) + '" text-anchor="middle" font-size="11" font-weight="700" fill="#0a1f3c">' + fmtNum(values[i]) + '</text>' +
+        valueText +
         '</g>' +
         '<text x="' + (x + bw / 2).toFixed(2) + '" y="' + (H - 8) + '" text-anchor="middle" font-size="11" fill="#9aa7b8">' + l + '</text>';
     });
@@ -869,10 +890,15 @@
 
   /* ---------- Placeholder buttons redirect to 404 ---------- */
   function initPlaceholderRedirect() {
-    var keep = 'a.sidebar-brand, .side-nav-item, .back-site, .topbar-menu-btn, .icon-btn, .profile-btn';
+    var keep =
+      'a.sidebar-brand, .side-nav-item, .back-site, .topbar-menu-btn, .icon-btn, .profile-btn, ' +
+      '.profile-menu-item, .chip, #markAllRead, ' +
+      '[data-page], [data-open-modal], [data-close-modal], [data-action], [data-logout], ' +
+      '[data-dropdown], [data-chart], [data-confirm-cancel], [data-confirm-ok], ' +
+      '.js-pagination button, form button, form a[href]';
     document.addEventListener('click', function (e) {
       var el = e.target.closest('button, a[href]');
-      if (!el || el.matches(keep)) return;
+      if (!el || el.matches(keep) || el.closest(keep)) return;
       e.preventDefault();
       e.stopPropagation();
       window.location.href = '404.html';
