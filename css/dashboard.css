@@ -1676,6 +1676,26 @@ textarea.form-control {
   margin-top: 5px;
 }
 
+.form-group.error .form-control {
+  border-color: #ef4444;
+  background: #fff7f7;
+}
+
+.form-group.error .form-control:focus {
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.12);
+}
+
+.form-error {
+  font-size: 0.76rem;
+  color: #ef4444;
+  margin-top: 6px;
+  display: none;
+}
+
+.form-group.error .form-error {
+  display: block;
+}
+
 .switch-row {
   display: flex;
   align-items: center;

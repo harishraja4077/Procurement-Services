@@ -103,21 +103,31 @@
       var signinEmail = document.getElementById('email');
       var signinPass = document.getElementById('password');
       var signinBtn = document.getElementById('signinBtn');
+      var rememberBox = document.getElementById('remember');
 
       clearErrorOnInput(signinEmail);
       clearErrorOnInput(signinPass);
+
+      if (rememberBox) {
+        rememberBox.addEventListener('change', function () {
+          setError('fieldRemember', false);
+        });
+      }
 
       signinForm.addEventListener('submit', function (e) {
         e.preventDefault();
 
         var emailOk = signinEmail && EMAIL_RE.test(signinEmail.value.trim());
         var passOk = signinPass && PASSWORD_RE.test(signinPass.value.trim());
+        var rememberOk = rememberBox && rememberBox.checked;
 
         setError('fieldEmail', !emailOk);
         setError('fieldPassword', !passOk);
+        setError('fieldRemember', !rememberOk);
 
         if (!emailOk) { if (signinEmail) signinEmail.focus(); return; }
         if (!passOk) { if (signinPass) signinPass.focus(); return; }
+        if (!rememberOk) { if (rememberBox) rememberBox.focus(); return; }
 
         simulateSubmit(signinBtn, function () {
           try {

@@ -531,14 +531,64 @@
   /* ---------- Settings forms ---------- */
   function initSettings() {
     document.querySelectorAll('form[data-settings]').forEach(function (form) {
+      var fields = form.querySelectorAll('.form-group');
+
+      function fieldName(control) {
+        var label = control.id ? form.querySelector('label[for="' + control.id + '"]') : null;
+        if (label) return label.textContent.trim().replace(/\s*[*:]\s*$/, '');
+        return 'this field';
+      }
+
+      function showError(group, message) {
+        group.classList.add('error');
+        var err = group.querySelector('.form-error');
+        if (!err) {
+          err = document.createElement('div');
+          err.className = 'form-error';
+          group.appendChild(err);
+        }
+        err.textContent = message;
+      }
+
+      function clearError(group) {
+        group.classList.remove('error');
+      }
+
+      fields.forEach(function (group) {
+        var control = group.querySelector('input, select, textarea');
+        if (!control) return;
+        control.addEventListener('input', function () { clearError(group); });
+        control.addEventListener('change', function () { clearError(group); });
+      });
+
       form.addEventListener('submit', function (e) {
         e.preventDefault();
-        var emailField = form.querySelector('input[type="email"]');
-        if (emailField && (!emailField.value.trim() || !isGmailAddress(emailField.value))) {
-          markEmailError(emailField, 'Work email must be a Gmail address (@gmail.com).');
+        var firstInvalid = null;
+
+        fields.forEach(function (group) {
+          var control = group.querySelector('input, select, textarea');
+          if (!control) return;
+          var value = (control.value || '').trim();
+          clearError(group);
+
+          if (!value) {
+            showError(group, 'Please fill in your ' + fieldName(control).toLowerCase() + '.');
+            if (!firstInvalid) firstInvalid = control;
+            return;
+          }
+
+          if (control.type === 'email' && !isGmailAddress(value)) {
+            showError(group, 'Please use a Gmail address (must end with @gmail.com).');
+            if (!firstInvalid) firstInvalid = control;
+          }
+        });
+
+        if (firstInvalid) {
+          firstInvalid.focus();
           return;
         }
-        showToast('Your changes have been saved successfully.', 'success');
+
+        window.location.href = '404.html';
       });
     });
   }
@@ -888,19 +938,51 @@
 
   /* ---------- Placeholder buttons redirect to 404 ---------- */
   function initPlaceholderRedirect() {
+    // Handled controls that keep their normal behaviour.
     var keep =
       'a.sidebar-brand, .side-nav-item, .back-site, .logout-btn, .topbar-menu-btn, .icon-btn, .profile-btn, ' +
       '.profile-menu-item, .chip, #markAllRead, ' +
-      '[data-page], [data-open-modal], [data-close-modal], [data-action], [data-logout], ' +
-      '[data-dropdown], [data-chart], [data-confirm-cancel], [data-confirm-ok], ' +
-      '.js-pagination button, form button, form a[href]';
+      '[data-page], [data-logout], [data-dropdown], [data-chart], ' +
+      '.js-pagination button, form[data-settings]';
+
+    // Demo action controls that should route to the 404 page.
+    var redirect =
+      '[data-action], [data-open-modal], [data-close-modal], ' +
+      'form[data-admin-user] button[type="submit"], ' +
+      'form[data-modal-form] button[type="submit"]';
+
     document.addEventListener('click', function (e) {
       var el = e.target.closest('button, a[href], .dropdown-item');
-      if (!el || el.matches(keep) || el.closest(keep)) return;
+      if (!el) return;
+      if (el.matches(redirect) || el.closest(redirect)) {
+        e.preventDefault();
+        e.stopPropagation();
+        window.location.href = '404.html';
+        return;
+      }
+      if (el.matches(keep) || el.closest(keep)) return;
       e.preventDefault();
       e.stopPropagation();
       window.location.href = '404.html';
     }, true);
+
+    // Safety net: keyboard submits (Enter) inside these forms also go to 404.
+    document.querySelectorAll('form[data-admin-user], form[data-modal-form]').forEach(function (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        window.location.href = '404.html';
+      });
+    });
+
+    // Topbar search: pressing Enter redirects to the 404 page.
+    document.querySelectorAll('.topbar-search input').forEach(function (input) {
+      input.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          window.location.href = '404.html';
+        }
+      });
+    });
   }
 
   /* ---------- Logout ---------- */

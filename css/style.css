@@ -4111,6 +4111,18 @@ section {
   display: block;
 }
 
+.auth-row.error + .field-msg {
+  display: block;
+  margin-top: 2px;
+  margin-bottom: 18px;
+}
+
+.auth-row.error .checkbox input {
+  outline: 2px solid #ef4444;
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
 .auth-row {
   display: flex;
   align-items: center;
