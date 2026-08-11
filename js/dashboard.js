@@ -79,10 +79,26 @@
   });
 
   /* ---------- Sidebar + mobile shell ---------- */
+  var lockScrollPos = 0;
+
+  function setSidebar(open) {
+    var sidebar = document.getElementById('sidebar');
+    var backdrop = document.getElementById('sidebarBackdrop');
+    if (sidebar) sidebar.classList.toggle('open', open);
+    if (backdrop) backdrop.classList.toggle('show', open);
+    document.body.classList.toggle('no-scroll', open);
+    if (open) {
+      lockScrollPos = window.scrollY || window.pageYOffset || 0;
+      document.body.style.top = '-' + lockScrollPos + 'px';
+    } else {
+      document.body.style.top = '';
+      window.scrollTo({ top: lockScrollPos, left: 0, behavior: 'instant' });
+    }
+  }
+
   function initShell() {
     var menuBtn = document.getElementById('menuToggle');
     var sidebar = document.getElementById('sidebar');
-    var backdrop = document.getElementById('sidebarBackdrop');
 
     var dateEl = document.getElementById('todayDate');
     if (dateEl) {
@@ -91,27 +107,13 @@
       } catch (err) { /* ignore */ }
     }
 
-    var lockScrollPos = 0;
-
-    function setSidebar(open) {
-      if (sidebar) sidebar.classList.toggle('open', open);
-      if (backdrop) backdrop.classList.toggle('show', open);
-      document.body.classList.toggle('no-scroll', open);
-      if (open) {
-        lockScrollPos = window.scrollY || window.pageYOffset || 0;
-        document.body.style.top = '-' + lockScrollPos + 'px';
-      } else {
-        document.body.style.top = '';
-        window.scrollTo({ top: lockScrollPos, left: 0, behavior: 'instant' });
-      }
-    }
-
     if (menuBtn) {
       menuBtn.addEventListener('click', function () {
         setSidebar(!sidebar.classList.contains('open'));
       });
     }
 
+    var backdrop = document.getElementById('sidebarBackdrop');
     if (backdrop) {
       backdrop.addEventListener('click', function () {
         setSidebar(false);
@@ -137,16 +139,12 @@
       navItems.forEach(function (item) {
         item.classList.toggle('active', item.getAttribute('data-page') === name);
       });
-      if (sidebar) sidebar.classList.remove('open');
-      if (backdropEl) backdropEl.classList.remove('show');
+      setSidebar(false);
 
       document.querySelector('.dash-content').scrollTop = 0;
       window.scrollTo({ top: 0, behavior: 'smooth' });
       renderCharts();
     }
-
-    var sidebar = document.getElementById('sidebar');
-    var backdropEl = document.getElementById('sidebarBackdrop');
 
     navItems.forEach(function (item) {
       item.addEventListener('click', function () {
