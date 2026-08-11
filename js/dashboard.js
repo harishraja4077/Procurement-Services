@@ -889,13 +889,13 @@
   /* ---------- Placeholder buttons redirect to 404 ---------- */
   function initPlaceholderRedirect() {
     var keep =
-      'a.sidebar-brand, .side-nav-item, .back-site, .topbar-menu-btn, .icon-btn, .profile-btn, ' +
+      'a.sidebar-brand, .side-nav-item, .back-site, .logout-btn, .topbar-menu-btn, .icon-btn, .profile-btn, ' +
       '.profile-menu-item, .chip, #markAllRead, ' +
       '[data-page], [data-open-modal], [data-close-modal], [data-action], [data-logout], ' +
       '[data-dropdown], [data-chart], [data-confirm-cancel], [data-confirm-ok], ' +
       '.js-pagination button, form button, form a[href]';
     document.addEventListener('click', function (e) {
-      var el = e.target.closest('button, a[href]');
+      var el = e.target.closest('button, a[href], .dropdown-item');
       if (!el || el.matches(keep) || el.closest(keep)) return;
       e.preventDefault();
       e.stopPropagation();
@@ -908,14 +908,12 @@
     document.querySelectorAll('[data-logout]').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
-        confirmAction('You will be signed out of your account.', function () {
-          try {
-            sessionStorage.removeItem('stackly_session_email');
-            sessionStorage.removeItem('stackly_session_role');
-          } catch (err) { /* ignore */ }
-          showToast('Signed out successfully. Redirecting\u2026', 'success');
-          setTimeout(function () { window.location.href = 'signin.html'; }, 1200);
-        });
+        try {
+          sessionStorage.removeItem('stackly_session_email');
+          sessionStorage.removeItem('stackly_session_role');
+        } catch (err) { /* ignore */ }
+        showToast('Signed out successfully. Redirecting\u2026', 'success');
+        setTimeout(function () { window.location.href = 'signin.html'; }, 800);
       });
     });
   }

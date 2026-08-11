@@ -635,6 +635,7 @@ textarea {
 }
 
 .profile-btn .p-role {
+  display: block;
   font-size: 0.72rem;
   color: var(--text-light);
 }
@@ -2139,10 +2140,10 @@ textarea.form-control {
   }
 
   .topbar-title h1 {
-    white-space: normal;
-    overflow: visible;
-    text-overflow: clip;
-    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.2;
   }
 
   .dropdown-panel {
