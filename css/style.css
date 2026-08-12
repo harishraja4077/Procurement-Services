@@ -70,7 +70,7 @@ ul {
 }
 
 section {
-  padding: 96px 0;
+  padding: 72px 0;
   position: relative;
 }
 
@@ -1450,7 +1450,7 @@ section {
 
 /* --- Pre-footer (non-section CTA/newsletter wrapper) --------------------- */
 .pre-footer {
-  padding: 0 0 96px;
+  padding: 0 0 72px;
 }
 
 /* --- CTA banner ---------------------------------------------------------- */
@@ -2067,6 +2067,118 @@ section {
   background: var(--gold);
   color: #fff;
   transform: translateY(-2px);
+}
+
+/* --- Map location info card --------------------------------------------- */
+.map-location-card {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 4;
+  max-width: 300px;
+  background: rgba(8, 12, 18, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  padding: 14px 16px;
+  color: #fff;
+  text-align: left;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.map-loc-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.map-loc-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 1.12rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.map-loc-info {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: help;
+  flex-shrink: 0;
+}
+
+.map-loc-info svg {
+  width: 100%;
+  height: 100%;
+}
+
+.map-loc-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.map-loc-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+}
+
+.map-loc-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.map-loc-btn:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+}
+
+.map-loc-address {
+  margin: 10px 0 0;
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.map-loc-rating {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+}
+
+.map-loc-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.map-loc-stars svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--gold);
+}
+
+.map-loc-reviews {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.68);
 }
 
 /* --- Branches ------------------------------------------------------------ */
@@ -3084,7 +3196,7 @@ section {
   }
 
   section {
-    padding: 84px 0;
+    padding: 64px 0;
   }
 
   /* ---- Mobile nav (full-screen hamburger overlay) ---- */
@@ -3164,7 +3276,7 @@ section {
 
 @media (max-width: 768px) {
   section {
-    padding: 64px 0;
+    padding: 48px 0;
   }
 
   .topbar-info .hide-sm {
@@ -3279,7 +3391,7 @@ section {
   }
 
   .pre-footer {
-    padding-bottom: 64px;
+    padding-bottom: 48px;
   }
 
   .footer {
@@ -3293,11 +3405,61 @@ section {
 
 @media (max-width: 520px) {
   section {
-    padding: 56px 0;
+    padding: 40px 0;
   }
 
   .section-banner {
     height: 170px;
+  }
+
+  .map-location-card {
+    top: 10px;
+    left: 10px;
+    max-width: 220px;
+    padding: 10px 12px;
+    border-radius: 10px;
+  }
+
+  .map-loc-name {
+    font-size: 0.92rem;
+    gap: 5px;
+  }
+
+  .map-loc-info {
+    width: 13px;
+    height: 13px;
+  }
+
+  .map-loc-actions {
+    gap: 6px;
+  }
+
+  .map-loc-btn {
+    width: 27px;
+    height: 27px;
+  }
+
+  .map-loc-btn svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .map-loc-address {
+    font-size: 0.72rem;
+    margin-top: 8px;
+  }
+
+  .map-loc-stars {
+    font-size: 0.8rem;
+  }
+
+  .map-loc-stars svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .map-loc-reviews {
+    font-size: 0.7rem;
   }
 
   .feature-grid {
@@ -3554,6 +3716,42 @@ section {
     height: 260px;
   }
 
+  .map-location-card {
+    top: 12px;
+    left: 12px;
+    max-width: 255px;
+    padding: 12px 14px;
+    border-radius: 12px;
+  }
+
+  .map-loc-name {
+    font-size: 1rem;
+  }
+
+  .map-loc-info {
+    width: 15px;
+    height: 15px;
+  }
+
+  .map-loc-btn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .map-loc-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .map-loc-address {
+    font-size: 0.78rem;
+    margin-top: 9px;
+  }
+
+  .map-loc-rating {
+    margin-top: 10px;
+  }
+
   .nf-search {
     flex-direction: column;
     background: transparent;
@@ -3574,7 +3772,7 @@ section {
   }
 
   .pre-footer {
-    padding-bottom: 56px;
+    padding-bottom: 40px;
   }
 
   .footer-bottom {
@@ -3590,7 +3788,7 @@ section {
 
 @media (max-width: 400px) {
   section {
-    padding: 48px 0;
+    padding: 36px 0;
   }
 
   .topbar {
@@ -3672,7 +3870,7 @@ section {
    ========================================================================== */
 
 .auth-page {
-  padding: 64px 0 96px;
+  padding: 64px 0 72px;
   background:
     linear-gradient(115deg, rgba(6, 21, 41, 0.97) 0%, rgba(10, 31, 60, 0.92) 55%, rgba(20, 80, 138, 0.88)),
     url("../assets/page-hero.webp") center/cover no-repeat;
@@ -4490,7 +4688,7 @@ section {
 
 @media (max-width: 520px) {
   .auth-page {
-    padding: 40px 0 64px;
+    padding: 40px 0 48px;
   }
 
   .auth-side {
