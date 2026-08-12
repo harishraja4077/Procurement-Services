@@ -190,18 +190,6 @@
       if (e.key === 'Escape') closeAllDropdowns();
     });
 
-    var markRead = document.getElementById('markAllRead');
-    if (markRead) {
-      markRead.addEventListener('click', function () {
-        document.querySelectorAll('#notifList .dropdown-item').forEach(function (item) {
-          item.style.opacity = '0.55';
-        });
-        var dots = document.querySelectorAll('.icon-btn .dot-indicator');
-        dots.forEach(function (d) { d.style.display = 'none'; });
-        showToast('All notifications marked as read.');
-      });
-    }
-
     function closeAllDropdowns() {
       document.querySelectorAll('.dropdown-panel.open').forEach(function (p) {
         p.classList.remove('open');
@@ -941,7 +929,7 @@
     // Handled controls that keep their normal behaviour.
     var keep =
       'a.sidebar-brand, .side-nav-item, .back-site, .logout-btn, .topbar-menu-btn, .icon-btn, .profile-btn, ' +
-      '.profile-menu-item, .chip, #markAllRead, ' +
+      '.profile-menu-item, .chip, ' +
       '[data-page], [data-logout], [data-dropdown], [data-chart], ' +
       '.js-pagination button, form[data-settings]';
 
