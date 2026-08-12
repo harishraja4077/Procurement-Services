@@ -58,7 +58,14 @@
     /* ---------- Field error helpers ---------- */
     function setError(fieldId, hasError) {
       var field = document.getElementById(fieldId);
-      if (field) field.classList.toggle('error', hasError);
+      if (field) {
+        field.classList.toggle('error', hasError);
+        var msgId = field.getAttribute('data-error-msg');
+        if (msgId) {
+          var msg = document.getElementById(msgId);
+          if (msg) msg.style.display = hasError ? 'block' : 'none';
+        }
+      }
     }
 
     function clearErrorOnInput(input) {

@@ -2023,12 +2023,50 @@ section {
   color: var(--gold-dark);
 }
 
+.map-wrap {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
 .map-frame {
   width: 100%;
   height: 340px;
   border: 0;
-  border-radius: 20px;
-  box-shadow: var(--shadow-sm);
+  display: block;
+}
+
+.map-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.map-link-badge {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: var(--navy);
+  color: #fff;
+  border-radius: 40px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.map-link-badge:hover {
+  background: var(--gold);
+  color: #fff;
+  transform: translateY(-2px);
 }
 
 /* --- Branches ------------------------------------------------------------ */
